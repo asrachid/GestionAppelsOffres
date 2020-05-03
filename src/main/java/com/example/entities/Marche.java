@@ -1,5 +1,6 @@
 package com.example.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.EmbeddedId;
@@ -9,8 +10,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 
 @Entity
-public class Marche {
+public class Marche implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	@EmbeddedId
 	private MarcheKey code;
 	
@@ -32,9 +35,10 @@ public class Marche {
 		super();
 	}
 
-	public Marche(AppelOffres appelOffre, Soumissionnaire soumissionnaire, Date dateLimiteRemisePlis,
+	public Marche(MarcheKey code, AppelOffres appelOffre, Soumissionnaire soumissionnaire, Date dateLimiteRemisePlis,
 			Date dateExecution, String lieuExecution) {
 		super();
+		this.code=code;
 		this.appelOffre = appelOffre;
 		this.soumissionnaire = soumissionnaire;
 		this.dateLimiteRemisePlis = dateLimiteRemisePlis;

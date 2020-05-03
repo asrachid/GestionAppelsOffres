@@ -25,12 +25,14 @@ public class AcheteurPublic extends Utilisateur{
 		super();
 	}
 	
-	public AcheteurPublic(Long code, String login, String email, String type, String profileAP) {
-		super(code, login, email);
+	public AcheteurPublic(Long codeUser, String loginUser, String emailUser, String type, String profileAP) {
+		super(codeUser, loginUser, emailUser);
 		this.type = type;
 		this.profileAP = profileAP;
 	}
-	
+
+
+
 	public String getType() {
 		return type;
 	}

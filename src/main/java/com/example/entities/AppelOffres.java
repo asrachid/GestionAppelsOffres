@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,7 +18,7 @@ public class AppelOffres implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id 
+	@Id @GeneratedValue
 	@Column (name="code_ao")
 	private Long codeAO;
 	@Column (name="objet_ao")

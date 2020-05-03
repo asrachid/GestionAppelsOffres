@@ -15,7 +15,6 @@ import com.example.entities.AppelOffres;
 import com.example.entities.Marche;
 import com.example.entities.MarcheKey;
 import com.example.entities.Soumissionnaire;
-import com.example.entities.Utilisateur;
 
 @SpringBootApplication
 public class MarchesPublicsApplication implements CommandLineRunner{
@@ -33,16 +32,17 @@ public class MarchesPublicsApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		/*
-		AcheteurPublic user1=utilisateurRepository.save(new AcheteurPublic(0130l,"Farid","Farid@gmail.com","Administration de l'etat","Administrateur Acheteur"));
-		Soumissionnaire user2=utilisateurRepository.save(new Soumissionnaire(0134l,"Rachid","Rachid@gmail.com","President de la commission d'appel d'offres de SEFIANI"));
+		
+		AcheteurPublic user1=utilisateurRepository.save(new AcheteurPublic(1130l,"Farid","Farid@gmail.com","Administration de l'etat","Administrateur Acheteur"));
+		Soumissionnaire user2=utilisateurRepository.save(new Soumissionnaire(1134l,"Rachid","Rachid@gmail.com","President de la commission d'appel d'offres de SEFIANI"));
 		
 		AppelOffres AO1=appelOffresRepository.save(new AppelOffres("Travaux d’élargissement et de renforcement de la RR408 du PK 98+000 au PK 119+000, dépendant de la DPETLE de Taounate",
-						"AOO","Travaux","procedure.pdfO",new Date(),"dossierCandidature.pdf",user1));
+						"AOO","Travaux","procedure.pdf",new Date(),"dossierCandidature.pdf",user1));
 		
-		//Marche m1=marcheRepository.save(new Marche(AO1,user2,new Date(),new Date(),"Taounat"));
-		marcheRepository.save(new Marche(AO1,user2,new Date(),new Date(),"Taounat"));
-		*/
+		MarcheKey m1Key=new MarcheKey(AO1.getCodeAO(),user2.getCodeUser());
+		
+		marcheRepository.save(new Marche(m1Key,AO1,user2,new Date(),new Date(),"Taounat"));
+		
 	}
 
 }
