@@ -1,11 +1,14 @@
 package com.example.entities;
 
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 
 @Entity
 @DiscriminatorValue("SM")
@@ -16,15 +19,17 @@ public class Soumissionnaire extends Utilisateur{
 	@Column (name="profile_sm")
 	private String profileS;
 	
-	@OneToMany(mappedBy="soumissionnaire")
-	private Collection<Marche> marches;
+	@ManyToMany(fetch=FetchType.LAZY,
+			cascade=CascadeType.ALL,
+			mappedBy = "soumissionnaires")
+	private Set<AppelOffres> appelsOffres=new HashSet<>();
 	
 	public Soumissionnaire() {
 		super();
 	}
-	
-	public Soumissionnaire(Long code, String login, String email, String profileS) {
-		super(code, login, email);
+
+	public Soumissionnaire(Long codeUser, String loginUser, String emailUser, String profileS) {
+		super(codeUser, loginUser, emailUser);
 		this.profileS = profileS;
 	}
 
@@ -36,15 +41,14 @@ public class Soumissionnaire extends Utilisateur{
 		this.profileS = profileS;
 	}
 
-	public Collection<Marche> getMarches() {
-		return marches;
+	public Set<AppelOffres> getAppelsOffres() {
+		return appelsOffres;
 	}
 
-
-
-	public void setMarches(Collection<Marche> marches) {
-		this.marches = marches;
+	public void setAppelsOffres(Set<AppelOffres> appelsOffres) {
+		this.appelsOffres = appelsOffres;
 	}
+	
 	
 	
 }

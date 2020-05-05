@@ -1,16 +1,22 @@
 package com.example.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
 
 
 @Entity
@@ -18,34 +24,53 @@ public class AppelOffres implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id @GeneratedValue
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name="code_ao")
 	private Long codeAO;
+	
 	@Column (name="objet_ao")
 	private String objetAO;
+	
 	@Column (name="categorie_ao")
 	private String categorieAO;
+	
 	@Column (name="structure_ao")
 	private String secteurAO;
+	
 	@Column (name="procedure_ao")
 	private String procedureAO;
+	
 	@Column (name="date_ao")
 	private Date dateAO;
+	
 	@Column (name="dossier_consultation_ao")
 	private String dossierConsultationAO;
+	
+	private Date dateLimiteRemisePlis;
+	
+	private Date dateExecution;
+	
+	private String lieuExecution;
+	
 	@ManyToOne
-	@JoinColumn(name="CODE_ACHETEUR_PUBLIC")
+	@JoinColumn(name="code_ap")
 	private AcheteurPublic acheteurPublic;
 	
-	@OneToMany(mappedBy="appelOffre")
-	private Collection<Marche> marches;
+	@ManyToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@JoinTable(name="soumissionner",
+			joinColumns= {@JoinColumn(name="code_AO")},
+			inverseJoinColumns= {@JoinColumn(name="code_sm")})
+    private Set<Soumissionnaire> soumissionnaires=new HashSet<>();
+	
+	
 	
 	public AppelOffres() {
 		super();
 	}
 
 	public AppelOffres(String objetAO, String categorieAO, String secteurAO, String procedureAO, Date dateAO,
-			String dossierConsultationAO, AcheteurPublic acheteurPublic) {
+			String dossierConsultationAO, Date dateLimiteRemisePlis, Date dateExecution, String lieuExecution,
+			AcheteurPublic acheteurPublic) {
 		super();
 		this.objetAO = objetAO;
 		this.categorieAO = categorieAO;
@@ -53,6 +78,9 @@ public class AppelOffres implements Serializable{
 		this.procedureAO = procedureAO;
 		this.dateAO = dateAO;
 		this.dossierConsultationAO = dossierConsultationAO;
+		this.dateLimiteRemisePlis = dateLimiteRemisePlis;
+		this.dateExecution = dateExecution;
+		this.lieuExecution = lieuExecution;
 		this.acheteurPublic = acheteurPublic;
 	}
 
@@ -112,6 +140,30 @@ public class AppelOffres implements Serializable{
 		this.dossierConsultationAO = dossierConsultationAO;
 	}
 
+	public Date getDateLimiteRemisePlis() {
+		return dateLimiteRemisePlis;
+	}
+
+	public void setDateLimiteRemisePlis(Date dateLimiteRemisePlis) {
+		this.dateLimiteRemisePlis = dateLimiteRemisePlis;
+	}
+
+	public Date getDateExecution() {
+		return dateExecution;
+	}
+
+	public void setDateExecution(Date dateExecution) {
+		this.dateExecution = dateExecution;
+	}
+
+	public String getLieuExecution() {
+		return lieuExecution;
+	}
+
+	public void setLieuExecution(String lieuExecution) {
+		this.lieuExecution = lieuExecution;
+	}
+
 	public AcheteurPublic getAcheteurPublic() {
 		return acheteurPublic;
 	}
@@ -120,13 +172,14 @@ public class AppelOffres implements Serializable{
 		this.acheteurPublic = acheteurPublic;
 	}
 
-	public Collection<Marche> getMarches() {
-		return marches;
+	public Set<Soumissionnaire> getSoumissionnaires() {
+		return soumissionnaires;
 	}
 
-	public void setMarches(Collection<Marche> marches) {
-		this.marches = marches;
+	public void setSoumissionnaires(Set<Soumissionnaire> soumissionnaires) {
+		this.soumissionnaires = soumissionnaires;
 	}
-
+	
+	
 	
 }
