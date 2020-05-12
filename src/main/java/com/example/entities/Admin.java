@@ -13,8 +13,8 @@ public class Admin extends Utilisateur{
 		super();
 	}
 
-	public Admin(Long code, String login, String email) {
-		super(code, login, email);
+	public Admin(String password, String username, String email, boolean active) {
+		super(password, username, email, active);
 	}
 	
 	

@@ -25,5 +25,4 @@ public interface IMarchesPublicsMetier {
 	public List<AppelOffres> listAll();
  	public List<AppelOffres> listAOBySecteur(@Param("secteurAO") String secteurAO);
  	public ArrayList<String> listSecteurs();
-	public Utilisateur getUser(@Param("code") Long codeUser , @Param("login") String loginUser);
 }

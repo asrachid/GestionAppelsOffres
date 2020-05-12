@@ -10,7 +10,6 @@ import com.example.entities.Utilisateur;
 
 public interface UtilisateurRepository extends JpaRepository<Utilisateur,Long>{
 	
-	@Query("select user from Utilisateur user where user.codeUser=:code and user.loginUser=:login") 
-	public Utilisateur getUser(@Param("code") Long codeUser , @Param("login") String loginUser);
+	
 	 
 }

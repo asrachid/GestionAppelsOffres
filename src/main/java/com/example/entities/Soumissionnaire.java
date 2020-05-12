@@ -28,8 +28,8 @@ public class Soumissionnaire extends Utilisateur{
 		super();
 	}
 
-	public Soumissionnaire(Long codeUser, String loginUser, String emailUser, String profileS) {
-		super(codeUser, loginUser, emailUser);
+	public Soumissionnaire(String password, String username, String email, boolean active, String profileS) {
+		super(password, username, email, active);
 		this.profileS = profileS;
 	}
 

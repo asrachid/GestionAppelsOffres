@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html 	xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<title>Gestion appels d'offres</title>
 		
-				
-		<link rel="stylesheet" type="text/css" href="../static/css/myStyle.css">
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -19,34 +18,12 @@
 			<div class="col-md-12">
 				<h1>Gestion des appels d'offres <span class="badge badge-secondary">PFA</span></h1>
 			</div> 
-			<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-			  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-			    <ul class="navbar-nav">
-			      <li class="nav-item">
-			        <a class="nav-link" th:href="@{/}">Appel d'offres</a>
-			      </li>
-			      <li class="nav-item">
-			        <a class="nav-link" href="#">Acheteurs publics</a>
-			      </li>
-			      <li class="nav-item">
-			        <a class="nav-link" href="#">Soumissionnaires</a>
-			      </li>
-			      <li class="nav-item dropdown">
-			        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			          Docs officiels
-			        </a>
-			        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-			          <a class="dropdown-item" href="#">Action</a>
-			          <a class="dropdown-item" href="#">Another action</a>
-			          <a class="dropdown-item" href="#">Something else here</a>
-			        </div>
-			      </li>
-			    </ul>
-			    <ul class="navbar-nav navbar-right">
-						<li class="nav-item"><a class="nav-link" th:href="@{/AuthAcheteurPublic}">Acces Acheteur Public</a></li>
-					</ul>
-			  </div>
-			</nav>
+			<div id="bande_horizontale" style="padding: 0px;
+				margin: 0px;
+				border: none;
+				width: 100%;
+				height: 80px;
+				background-color: #FEB201;"	></div> 
 		</header>
 		<aside class="col-md-2">
 			<div class="panel panel-light">
@@ -59,6 +36,16 @@
 						  	<a href="#" class="list-group-item list-group-item-action ">A simple primary list group item</a>
 						  	<a href="#" class="list-group-item list-group-item-action ">A simple primary list group item</a>
 						</div>
+						<div class="list-group">
+						  <!-- <a href="#" class="list-group-item list-group-item-action list-group-item-warning">Mon Profile : [[${#httpServletRequest.remoteUser}]]</a> -->
+						  <a href="#" class="list-group-item list-group-item-action list-group-item-warning">Docs officiels</a>
+						 </div>
+						<!-- <form th:action="@{/logout}" method="post">
+							<input type="submit" value="Se deconnecter" class="btn btn-warning">
+						</form> -->
+						<form th:action="@{/login_success}" method="post">
+							<input type="submit" value="Accès Acheteur Public" class="btn btn-warning">
+						</form>
 					</div>
 			</div>
 		</aside>

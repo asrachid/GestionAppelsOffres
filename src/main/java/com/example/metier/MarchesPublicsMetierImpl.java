@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,10 +73,9 @@ public class MarchesPublicsMetierImpl implements IMarchesPublicsMetier {
  		return aoRepo.listSecteurs();
  	}
  	
- 	public Utilisateur getUser(@Param("code") Long codeUser , @Param("login") String loginUser) {
- 		Utilisateur user=userRepo.getUser(codeUser, loginUser);
- 		if(user==null) throw new RuntimeException("utilisateur Introuvable!");
- 		return user;
+ 	public String passwordGenerator(String password) {
+ 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String encodedPassword = encoder.encode(password);
+		return encodedPassword;
  	}
- 	
 }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<head>
+		<meta charset="utf-8">
+		<title>Gestion appels d'offres</title>
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<header>
+			<div class="col-md-12">
+				<h1>Gestion des appels d'offres <span class="badge badge-secondary">PFA</span></h1>
+			</div> 
+			<div id="bande_horizontale" style="padding: 0px;
+				margin: 0px;
+				border: none;
+				width: 100%;
+				height: 80px;
+				background-color: #FEB201;"	></div> 
+		</header>
+		<div layout:fragment="content" class="col-md-4 col-md-offset-4">		
+			<div class="panel panel-light">
+				<div class="panel-body">
+					<h3>Authentification</h3>
+					<div th:if="${param.error}" class="text-danger">
+						Username ou password incorrect 
+					</div>
+					<div th:if="${param.logout}" class="text-danger">
+						Vous avez ete deconnecter
+					</div>
+					<form th:action="@{/login}" method="post">
+						<div class="form-group">
+					    	<label for="login">E-mail</label>
+					    	<input type="email" class="form-control"  name="email" required>
+					  	</div>
+					  	<div class="form-group">
+					    	<label for="password">Mot de passe</label>
+					    	<input type="password" class="form-control" name="password" required>
+					  	</div>
+					  	<button type="submit" class="btn btn-warning">S'authentifier</button>
+					</form>
+					<div style="margin-top:30px;">
+						<a href="#">Mot de passe oublié</a><br>
+						<a th:href="@{/cmtInscrire}">Comment s'inscrire?</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
