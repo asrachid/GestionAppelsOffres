@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<meta charset="utf-8">
+		<title>Gestion appels d'offres-Admin</title>
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+		
+	</head>
+	<body>
+		<header>
+			<div class="navbar navbar-default">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav">
+						<li><h1>Gestion des appels d'offres <span class="badge badge-secondary">PFA</span></h1></li>
+					</ul>
+				</div>
+			</div>
+		</header>
+
+			<aside class="col-md-2">
+				
+				<div class="panel panel-light">
+						<div class="panel-body">
+							<div class="list-group">
+							  	<a href="#" class="list-group-item list-group-item-action active">Annonces</a>
+							  	<a href="#" class="list-group-item list-group-item-action ">A simple primary list group item</a>
+							  	<a href="#" class="list-group-item list-group-item-action ">A simple primary list group item</a>
+							  	<a href="#" class="list-group-item list-group-item-action ">A simple primary list group item</a>
+							  	<a href="#" class="list-group-item list-group-item-action ">A simple primary list group item</a>
+							</div>
+							<div class="list-group">
+							  	<a href="#" class="list-group-item list-group-item-action ">Mes Appels Offres</a>
+							  	<a href="#" class="list-group-item list-group-item-action ">Soumissions</a>
+							</div>
+							<div class="list-group">
+							  	<input type="submit" class="list-group-item list-group-item-action list-group-item-link" th:value="${#httpServletRequest.remoteUser}">
+							</div>
+							<form th:action="@{/logout}" method="post">
+								<input type="submit" value="Se deconnecter" class="btn btn-danger">
+							</form>
+						</div>
+						
+				</div>
+			</aside>
+			
+			<section layout:fragment="content" class="col-md-10">
+				
+			</section>
+			<!-- Optional JavaScript -->
+	   		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	    	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" ></script>
+	    	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	    	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	    	<script src="../static/js/bootstrap.bundle.min.js" th:href="@{/js/bootstrap.bundle.min.js}"></script>
+	    	<script src="../static/js/bootstrap.bundle.js" th:href="@{/js/bootstrap.bundle.js}"></script>
+	</body>
+</html>

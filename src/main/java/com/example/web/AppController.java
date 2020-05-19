@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.entities.AppelOffres;
-import com.example.metier.IMarchesPublicsMetier;
+import com.example.metier.MarchesPublicsMetier;
 
 @Controller
 public class AppController {
 	@Autowired
-	private IMarchesPublicsMetier metier;
+	private MarchesPublicsMetier metier;
 
 	@RequestMapping(value = "/appelOffres")
 	public String index(Model model , @ModelAttribute("selectedSecteur") AppelOffres selectedSecteur) {
@@ -32,18 +32,9 @@ public class AppController {
 		return "accueil";
 	}
 	
-	@RequestMapping(value="/portailAdmin")
-    public String pageAdmin(){
-        return "portailAdmin";
-    }
-	
 	@GetMapping(value="/login")
     public String loginPage(){		
         return "login";
     }
-	
-	@RequestMapping(value="/cmtInscrire")
-    public String inscription(){
-        return "cmtInscrire";
-    }
+
 }

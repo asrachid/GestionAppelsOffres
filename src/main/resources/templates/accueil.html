@@ -17,50 +17,33 @@
 			
 			<div class="panel panel-light">
 				<div class="panel-body">
-					<h3>Appels d'offres</h3>
-					<table class="table table-hover" >
-						<thead>
-							<tr>
-								<th scope="col">Objet</th>
-							    <th scope="col">Categorie</th>
-							    <th scope="col">Procedure</th>
-							   	<th scope="col">Dossier de consultation</th>
-							    <th scope="col">Date limite remise plis</th>
-							    <th scope="col">Date d'execution</th>
-							    <th scope="col">Lieu d'execution</th>
-							    <th scope="col">Date de sortie</th>
-							    <th scope="col">Actions</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="ao:${listAOs}">
-								<td th:text="${ao.objetAO}">Product ID</td>
-							    <td th:text="${ao.categorieAO}">Name</td>
-							    <td th:text="${ao.procedureAO}">Made In</td>
-							    <td th:text="${ao.dossierConsultationAO}">Price</td>
-							    <td th:text="${ao.dateLimiteRemisePlis}">Product ID</td>
-							    <td th:text="${ao.dateExecution}">Name</td>
-							    <td th:text="${ao.lieuExecution}">Made In</td>
-							    <td th:text="${ao.dateAO}">Price</td>
-							    <td></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="panel panel-light">
-				<div class="panel-body">			
-					<h3>Appels d'offres par secteur</h3>
-					<form th:action="@{/appelOffres}" th:object="${selectedSecteur}" th:method="get">
-						<select th:field="*{secteurAO}">
-							<!-- <option	th:value="NULL" 
-							        th:text="Aucun">Options</option> -->
-							<option th:each="option : ${listSecteurs}" 
-							        th:value="${option}" 
-							        th:text="${option}">Options</option>
-						</select>
-						<button type="submit">submit</button>
-					</form>
+					<nav aria-label="breadcrumb">
+  						<ol class="breadcrumb">
+    						<li class="breadcrumb-item active" aria-current="page">Accueil</li>
+  						</ol>
+					</nav>
+					<div class="panel panel-primary">
+						<div class="panel-heading">Appels d'offres par secteur</div>
+						<div class="panel-body">
+							<form th:action="@{/appelOffres}" th:object="${selectedSecteur}" th:method="get">
+								
+									<div class="form-group col-md-6">
+										<label for="login">Secteur </label>
+										<select th:field="*{secteurAO}" class="form-control" >
+											<!-- <option	th:value="NULL" 
+											        th:text="Aucun">Options</option> -->
+											<option th:each="option : ${listSecteurs}" 
+											        th:value="${option}" 
+											        th:text="${option}">Options</option>
+										</select>
+									</div>
+								<div class="form-group col-md-12">
+										<button type="submit" class="btn btn-warning">submit</button>
+									</div>
+							</form>
+						</div>
+					</div>
+			
 					<table class="table table-hover" style="margin-top:30px;" th:if="${selectedSecteur.secteurAO}">
 						<thead>
 							<tr>

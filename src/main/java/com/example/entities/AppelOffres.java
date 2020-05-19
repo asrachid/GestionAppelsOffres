@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -37,9 +38,6 @@ public class AppelOffres implements Serializable{
 	@Column (name="structure_ao")
 	private String secteurAO;
 	
-	@Column (name="procedure_ao")
-	private String procedureAO;
-	
 	@Column (name="date_ao")
 	private Date dateAO;
 	
@@ -62,26 +60,27 @@ public class AppelOffres implements Serializable{
 			inverseJoinColumns= {@JoinColumn(name="code_sm")})
     private Set<Soumissionnaire> soumissionnaires=new HashSet<>();
 	
-	
+	@Lob
+	private byte[] data;
 	
 	public AppelOffres() {
 		super();
 	}
 
-	public AppelOffres(String objetAO, String categorieAO, String secteurAO, String procedureAO, Date dateAO,
+	public AppelOffres(String objetAO, String categorieAO, String secteurAO, Date dateAO,
 			String dossierConsultationAO, Date dateLimiteRemisePlis, Date dateExecution, String lieuExecution,
-			AcheteurPublic acheteurPublic) {
+			AcheteurPublic acheteurPublic, byte[] data) {
 		super();
 		this.objetAO = objetAO;
 		this.categorieAO = categorieAO;
 		this.secteurAO = secteurAO;
-		this.procedureAO = procedureAO;
 		this.dateAO = dateAO;
 		this.dossierConsultationAO = dossierConsultationAO;
 		this.dateLimiteRemisePlis = dateLimiteRemisePlis;
 		this.dateExecution = dateExecution;
 		this.lieuExecution = lieuExecution;
 		this.acheteurPublic = acheteurPublic;
+		this.data = data;
 	}
 
 	public Long getCodeAO() {
@@ -116,13 +115,6 @@ public class AppelOffres implements Serializable{
 		this.secteurAO = secteurAO;
 	}
 
-	public String getProcedureAO() {
-		return procedureAO;
-	}
-
-	public void setProcedureAO(String procedureAO) {
-		this.procedureAO = procedureAO;
-	}
 
 	public Date getDateAO() {
 		return dateAO;
@@ -178,6 +170,14 @@ public class AppelOffres implements Serializable{
 
 	public void setSoumissionnaires(Set<Soumissionnaire> soumissionnaires) {
 		this.soumissionnaires = soumissionnaires;
+	}
+
+	public byte[] getData() {
+		return data;
+	}
+
+	public void setData(byte[] data) {
+		this.data = data;
 	}
 	
 	

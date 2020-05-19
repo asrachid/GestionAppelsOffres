@@ -13,7 +13,7 @@ import javax.persistence.InheritanceType;
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="ROLE",
-discriminatorType=DiscriminatorType.STRING,length=2)
+discriminatorType=DiscriminatorType.STRING,length=5)
 public class Utilisateur implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
