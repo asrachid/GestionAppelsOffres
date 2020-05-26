@@ -2,6 +2,7 @@ package com.example.entities;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -17,7 +18,9 @@ public class AcheteurPublic extends Utilisateur{
 	private String type;
 	@Column (name="profile_ap")
 	private String profileAP;
-	@OneToMany(mappedBy="acheteurPublic")
+	@OneToMany(mappedBy="acheteurPublic", 
+				orphanRemoval = true,
+				cascade = CascadeType.ALL)
 	private Collection<AppelOffres> AppelsOffres;
 	
 	

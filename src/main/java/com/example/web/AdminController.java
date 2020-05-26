@@ -1,5 +1,6 @@
 package com.example.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.entities.AcheteurPublic;
 import com.example.entities.Admin;
+import com.example.entities.AppelOffres;
 import com.example.entities.Document;
 import com.example.entities.Soumissionnaire;
 import com.example.metier.MarchesPublicsMetier;
@@ -169,6 +171,30 @@ public class AdminController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/gestionAOAdmin/{email}", method = { RequestMethod.GET, RequestMethod.POST })
+	public String gestionAOAdmin(Model model,  @PathVariable(name = "email") String email,  @ModelAttribute("selectedSecteur") AppelOffres selectedSecteur) {
+		Admin admin = metier.getAdminByEmail(email);
+		model.addAttribute("admin", admin);
+		
+		ArrayList<String> listSecteurs = metier.listSecteurs();
+		model.addAttribute("listSecteurs", listSecteurs);
+		
+		List<AppelOffres> listAOSecteur = metier.listAOBySecteur(selectedSecteur.getSecteurAO());
+		model.addAttribute("listAOSecteur", listAOSecteur);
+		
+		model.addAttribute("listAOSecteur", listAOSecteur);
+		return "gestionAOAdmin";
+	}
+	
+	@RequestMapping("/deleteAOAdmin/{codeAO}&{id}")
+	public String deleteAOAdmin(@PathVariable(name = "codeAO") Long codeAO, @PathVariable(name = "id") Long id) {
+		AppelOffres ao = metier.getAO(codeAO).get();
+		String secteur = ao.getSecteurAO();
+		metier.deleteAO(codeAO);
+		Admin admin = metier.getAdmin(id);
+		return "redirect:/gestionAOAdmin/"+admin.getEmail()+"?secteurAO="+secteur;
+	}
+	
 	@GetMapping("/docs")
 	public String getDocs(Model model) {
 		List <Document> docs = metier.getFiles();
@@ -197,5 +223,12 @@ public class AdminController {
 	public String deleteDocument(@PathVariable(name = "id") Long id) {
 		metier.deleteDoc(id);
 		return "redirect:/docs";
+	}
+	
+	@RequestMapping(value = "/profilAdmin/{email}")
+	public String profilAdmin(Model model, @PathVariable(name = "email") String email) {
+		Admin admin = metier.getAdminByEmail(email);
+		model.addAttribute("admin", admin);
+		return "profilAdmin";
 	}
 }

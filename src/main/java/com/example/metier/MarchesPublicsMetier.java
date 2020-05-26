@@ -50,15 +50,18 @@ public class MarchesPublicsMetier {
 	 * sm.getAppelsOffres().add(ao); appelOffresRepository.save(ao);
 	 * }
 	 * }
-	 * 
 	 */
 	
 	public List<Admin> getAdmins() { 
 	 	return adminRepo.findAll(); 
 	}
 	
-	public Admin getAdminByEmail(String email) {
+	public Admin getAdminByEmail(@Param("email") String email) {
 		return adminRepo.getAdminByEmail(email);
+	}
+	
+	public AcheteurPublic getAPByEmail(String email) {
+		return apRepo.getAPByEmail(email);
 	}
 	
 	public List<AcheteurPublic> getAPs() { 
@@ -80,6 +83,14 @@ public class MarchesPublicsMetier {
 	public void changeActive(Boolean active,long id) {
 		userRepo.changeActive(active, id);
 	}
+	
+ 	public void changeProfilAP(String profileAP, long id) {
+ 		apRepo.changeProfilAP(profileAP, id);
+ 	}
+	
+ 	public void changeTypeAP(String type, long id) {
+ 		apRepo.changeTypeAP(type, id);
+ 	}
 	
 	public void saveAdmin(Admin user) { 
 	 	userRepo.save(user);
@@ -123,6 +134,9 @@ public class MarchesPublicsMetier {
 		return aoRepo.listAOBySecteur(secteurAO);
 	}
 	
+	public List<AppelOffres> listAOByAPSec(AcheteurPublic acheteurPublic, String secteurAO){
+		return aoRepo.listAOByAPSec(acheteurPublic, secteurAO);
+	}
 	
  	public ArrayList<String> listSecteurs(){
  		return aoRepo.listSecteurs();
@@ -151,18 +165,38 @@ public class MarchesPublicsMetier {
  		docRepo.deleteById(id);
 	}
  	
- 	public AppelOffres saveAO(String objetAO, String categorieAO, String secteurAO,
-			String dossierConsultationAO, Date dateLimiteRemisePlis, Date dateExecution, String lieuExecution,
+ 	public AppelOffres saveAO(String objetAO, String categorieAO, String secteurAO, Date dateLimiteRemisePlis, Date dateExecution, String lieuExecution,
 			AcheteurPublic acheteurPublic,MultipartFile file) {
  		String nomDoc = file.getOriginalFilename();
  		try {
  			AppelOffres ao = new AppelOffres(objetAO, categorieAO, secteurAO, new Date(),
- 					nomDoc, dateLimiteRemisePlis, dateExecution, lieuExecution, acheteurPublic,file.getBytes());
+ 					nomDoc, dateLimiteRemisePlis, dateExecution, lieuExecution, acheteurPublic, file.getContentType(),file.getBytes());
  			return aoRepo.save(ao);
  		}catch(Exception e) {
  			e.printStackTrace();
  		}
  		return null;
+ 	}
+ 	
+ 	public void changeDateLimiteRemisePlis(Date dateLimiteRemisePlis, long codeAO) {
+ 		aoRepo.changeDateLimiteRemisePlis(dateLimiteRemisePlis, codeAO);
+ 	}
+ 	
+ 	public void changeLieuExecution(String lieuExecution, long codeAO) {
+ 		aoRepo.changeLieuExecution(lieuExecution, codeAO);
+ 	}
+ 	
+ 	public void changeDateExecution(Date dateExecution, long codeAO) {
+ 		aoRepo.changeDateExecution(dateExecution, codeAO);
+ 	}
+ 	
+ 	public void changeDossierConsultation(MultipartFile file, long codeAO) {
+ 		String dossierConsultationAO = file.getOriginalFilename();
+ 		try {
+ 			aoRepo.changeDossierConsultation(dossierConsultationAO, file.getContentType(),file.getBytes(), codeAO);
+ 		}catch(Exception e) {
+ 			e.printStackTrace();
+ 		}
  	}
  	
  	public Optional<AppelOffres> getAO(Long codeAO) { 

@@ -17,6 +17,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 
 
@@ -35,8 +40,9 @@ public class AppelOffres implements Serializable{
 	@Column (name="categorie_ao")
 	private String categorieAO;
 	
-	@Column (name="structure_ao")
+	@Column (name="secteur_ao")
 	private String secteurAO;
+	
 	
 	@Column (name="date_ao")
 	private Date dateAO;
@@ -44,13 +50,16 @@ public class AppelOffres implements Serializable{
 	@Column (name="dossier_consultation_ao")
 	private String dossierConsultationAO;
 	
+	private String typeDocConsultation;
+	
 	private Date dateLimiteRemisePlis;
+	
 	
 	private Date dateExecution;
 	
 	private String lieuExecution;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="code_ap")
 	private AcheteurPublic acheteurPublic;
 	
@@ -69,7 +78,7 @@ public class AppelOffres implements Serializable{
 
 	public AppelOffres(String objetAO, String categorieAO, String secteurAO, Date dateAO,
 			String dossierConsultationAO, Date dateLimiteRemisePlis, Date dateExecution, String lieuExecution,
-			AcheteurPublic acheteurPublic, byte[] data) {
+			AcheteurPublic acheteurPublic, String typeDocConsultation, byte[] data) {
 		super();
 		this.objetAO = objetAO;
 		this.categorieAO = categorieAO;
@@ -80,6 +89,7 @@ public class AppelOffres implements Serializable{
 		this.dateExecution = dateExecution;
 		this.lieuExecution = lieuExecution;
 		this.acheteurPublic = acheteurPublic;
+		this.typeDocConsultation = typeDocConsultation;
 		this.data = data;
 	}
 
@@ -178,6 +188,14 @@ public class AppelOffres implements Serializable{
 
 	public void setData(byte[] data) {
 		this.data = data;
+	}
+
+	public String getTypeDocConsultation() {
+		return typeDocConsultation;
+	}
+
+	public void setTypeDocConsultation(String typeDocConsultation) {
+		this.typeDocConsultation = typeDocConsultation;
 	}
 	
 	

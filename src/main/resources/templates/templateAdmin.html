@@ -31,13 +31,12 @@
 							<div class="list-group">
 								<a th:href="@{/portailAdmin}" class="list-group-item list-group-item-action">Dashboard</a>
 							  	<a th:href="@{/users}" class="list-group-item list-group-item-action">Gestion Utilisateurs</a>
-							  	<a href="#" class="list-group-item list-group-item-action ">Gestion Appels Offres</a>
+							  	<a th:href="@{/gestionAOAdmin/{email}(email=${#httpServletRequest.remoteUser})}" class="list-group-item list-group-item-action ">Gestion Appels Offres</a>
 							  	<a href="#" class="list-group-item list-group-item-action ">Gestion Marches</a>
 							  	<a th:href="@{/docs}" class="list-group-item list-group-item-action ">Gestion Documents</a>
-							  	
 							</div>
 							<div class="list-group">
-							  	<input type="submit" class="list-group-item list-group-item-action list-group-item-link" th:value="${#httpServletRequest.remoteUser}">
+							  	<a th:href="@{/profilAdmin/}+${#httpServletRequest.remoteUser}" class="list-group-item list-group-item-action " th:value="${#httpServletRequest.remoteUser}">Mon profil</a>
 							</div>
 							<form th:action="@{/logout}" method="post">
 								<input type="submit" value="Se deconnecter" class="btn btn-danger">
@@ -55,7 +54,5 @@
 	    	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" ></script>
 	    	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 	    	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-	    	<script src="../static/js/bootstrap.bundle.min.js" th:href="@{/js/bootstrap.bundle.min.js}"></script>
-	    	<script src="../static/js/bootstrap.bundle.js" th:href="@{/js/bootstrap.bundle.js}"></script>
 	</body>
 </html>

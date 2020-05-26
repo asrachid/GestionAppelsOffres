@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="templateAP">
+	<head>
+	
+		<meta charset="utf-8">
+		<title>Gestion appels d'offres</title>
+
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div layout:fragment="content">
+			<div class="panel panel-light">
+				<div class="panel-body">	
+					<nav aria-label="breadcrumb">
+  						<ol class="breadcrumb">
+    						<li class="breadcrumb-item active" aria-current="page"><a th:href="@{/portailAP}">Accueil</a></li>
+    						<li class="breadcrumb-item active" aria-current="page"><a th:href="@{/profilAP/}+${#httpServletRequest.remoteUser}">Mon profil</a></li>
+    						<li class="breadcrumb-item active" aria-current="page">Editer profil ou type Acheteur public</li>
+  						</ol>
+					</nav> 
+					<form th:action="@{/saveProfilAP}"  th:object="${ap}" method="post">
+						<div class="form-group">
+							<input type="hidden" class="form-control" th:field="*{id}" readonly="readonly" aria-describedby="">
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<input type="text" class="form-control" th:field="*{email}" readonly="readonly" aria-describedby="">
+							</div>
+							<div class="form-group col-md-6">
+								<input type="text" class="form-control" th:field="*{password}" readonly="readonly" aria-describedby="">
+							</div>
+						</div>
+						<div class="form-group col-md-12">
+							<label for="profile_ap">Profile Acheteur public</label>
+							<input type="text" class="form-control" th:field="*{profileAP}">
+						</div>
+						<div class="form-group col-md-12">
+							<label for="type_ap">Type Acheteur public</label>
+							<select class="form-control" th:field="*{type}">
+								<option th:value="EntrepEtablissementPublic">Entreprise ou etablissement public</option>
+								<option th:value="CollectiviteTerritoriale">Collectivite territoriale</option>
+								<option th:value="AdministrationdEtat">Administration de l'etat</option>
+							</select>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<input type="text" class="form-control" th:field="*{active}" readonly="readonly" aria-describedby="">
+							</div>
+						</div>
+						<div class="form-group col-md-12">
+							<button type="submit" class="btn btn-warning">Modifier</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

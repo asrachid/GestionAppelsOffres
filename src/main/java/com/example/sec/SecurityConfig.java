@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers("/appelOffres").permitAll()
+			.antMatchers("/downloadDoc/*").permitAll()
 			.antMatchers("/portailAP").hasRole("AP")
 			.antMatchers("/portailAdmin").hasRole("ADMIN")
 			.anyRequest().authenticated()
@@ -44,11 +45,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.loginPage("/login")
 				.usernameParameter("email")
 				.passwordParameter("password")
-				/* .defaultSuccessUrl("/login_success") */
+				.defaultSuccessUrl("/portailAP") 
 			.and()
 			.logout()
 				.permitAll()
-				.logoutSuccessUrl("/login")
+				.logoutSuccessUrl("/appelOffres")
 			.and()
 			.exceptionHandling().accessDeniedPage("/403")
 			;

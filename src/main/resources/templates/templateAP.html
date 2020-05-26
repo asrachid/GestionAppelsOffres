@@ -36,11 +36,9 @@
 							  	<a href="#" class="list-group-item list-group-item-action ">A simple primary list group item</a>
 							</div>
 							<div class="list-group">
-							  	<a href="#" class="list-group-item list-group-item-action ">Mes Appels Offres</a>
+							  	<a th:href="@{/gestionAO/{email}(email=${#httpServletRequest.remoteUser})}" class="list-group-item list-group-item-action ">Mes Appels Offres</a>
 							  	<a href="#" class="list-group-item list-group-item-action ">Soumissions</a>
-							</div>
-							<div class="list-group">
-							  	<input type="submit" class="list-group-item list-group-item-action list-group-item-link" th:value="${#httpServletRequest.remoteUser}">
+							  	<a th:href="@{/profilAP/}+${#httpServletRequest.remoteUser}" class="list-group-item list-group-item-action " th:value="${#httpServletRequest.remoteUser}">Mon profil</a>
 							</div>
 							<form th:action="@{/logout}" method="post">
 								<input type="submit" value="Se deconnecter" class="btn btn-danger">
@@ -53,12 +51,5 @@
 			<section layout:fragment="content" class="col-md-10">
 				
 			</section>
-			<!-- Optional JavaScript -->
-	   		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	    	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" ></script>
-	    	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-	    	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-	    	<script src="../static/js/bootstrap.bundle.min.js" th:href="@{/js/bootstrap.bundle.min.js}"></script>
-	    	<script src="../static/js/bootstrap.bundle.js" th:href="@{/js/bootstrap.bundle.js}"></script>
 	</body>
 </html>
