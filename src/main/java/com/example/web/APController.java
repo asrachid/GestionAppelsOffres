@@ -22,12 +22,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.entities.AcheteurPublic;
 import com.example.entities.AppelOffres;
-import com.example.metier.MarchesPublicsMetier;
+import com.example.metier.AppelOffresMetier;
+import com.example.metier.UtilisateurMetier;
 
 @Controller
 public class APController {
 	@Autowired
-	private MarchesPublicsMetier metier;
+	private UtilisateurMetier userMetier;
+	@Autowired
+	private AppelOffresMetier aoMetier;
 
 	@RequestMapping(value = "/portailAP")
 	public String pageAP() {
@@ -36,14 +39,14 @@ public class APController {
 	
 	@RequestMapping(value = "/gestionAO/{email}", method = { RequestMethod.GET, RequestMethod.POST })
 	public String gestionAO(Model model,  @PathVariable(name = "email") String email,  @ModelAttribute("selectedSecteur") AppelOffres selectedSecteur) {
-		AcheteurPublic ap = metier.getAPByEmail(email);
+		AcheteurPublic ap = userMetier.getAPByEmail(email);
 		model.addAttribute("ap", ap);
 
 
-		ArrayList<String> listSecteurs = metier.listSecteurs();
+		ArrayList<String> listSecteurs = aoMetier.listSecteurs();
 		model.addAttribute("listSecteurs", listSecteurs);
 		
-		List<AppelOffres> listAoAPSec = metier.listAOByAPSec(ap, selectedSecteur.getSecteurAO());
+		List<AppelOffres> listAoAPSec = aoMetier.listAOByAPSec(ap, selectedSecteur.getSecteurAO());
 		
 		model.addAttribute("listAoAPSec", listAoAPSec);
 		return "gestionAO";
@@ -51,7 +54,7 @@ public class APController {
 	
 	@GetMapping("/downloadDoc/{aoId}")
 	public ResponseEntity<ByteArrayResource> downloadDoc(@PathVariable Long aoId) {
-		AppelOffres doc = metier.getAO(aoId).get();
+		AppelOffres doc = aoMetier.getAO(aoId).get();
 		return ResponseEntity.ok()
 				.contentType(MediaType.parseMediaType(doc.getTypeDocConsultation())) 
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment:filename=\""+doc.getDossierConsultationAO()+"\"")
@@ -60,7 +63,7 @@ public class APController {
 	
 	@RequestMapping(value = "/addAO/{id}", method = { RequestMethod.GET, RequestMethod.POST })
 	public String addAO(Model model,  @PathVariable(name = "id") Long id, @ModelAttribute("ao")AppelOffres ao) {
-		AcheteurPublic ap = metier.getAP(id);
+		AcheteurPublic ap = userMetier.getAP(id);
 		model.addAttribute("ap",ap);
 		return "addAO";
 	}
@@ -69,20 +72,20 @@ public class APController {
 	@RequestMapping(value="/saveAO", method = RequestMethod.POST)
 	public String saveAO(String objetAO, String categorieAO, String secteurAO, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateLimiteRemisePlis,
 			String lieuExecution, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateExecution, Long idAP, MultipartFile file) {
-		AcheteurPublic ap = metier.getAP(idAP);
+		AcheteurPublic ap = userMetier.getAP(idAP);
 		/*SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-Y HH-mm");
 		Date dateLimiteRemisePlis = sdf.parse(dateLimiteRemisePlis);*/
-		metier.saveAO(objetAO, categorieAO, secteurAO, dateLimiteRemisePlis, dateExecution, lieuExecution, ap, file);
+		aoMetier.saveAO(objetAO, categorieAO, secteurAO, dateLimiteRemisePlis, dateExecution, lieuExecution, ap, file);
 		
 		return "redirect:/gestionAO/"+ap.getEmail();
 	}
 	
 	@RequestMapping(value="/changeDateLimiteRemisePlis" ,method = RequestMethod.POST )
     public String changeDateLimiteRemisePlis(Model model, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateLimiteRemisePlis, Long idAP, Long codeAO) {
-		AcheteurPublic ap = metier.getAP(idAP);
-		AppelOffres ao = metier.getAO(codeAO).get();
+		AcheteurPublic ap = userMetier.getAP(idAP);
+		AppelOffres ao = aoMetier.getAO(codeAO).get();
 		try { 
-			metier.changeDateLimiteRemisePlis(dateLimiteRemisePlis, codeAO);
+			aoMetier.changeDateLimiteRemisePlis(dateLimiteRemisePlis, codeAO);
 		}catch (Exception e){ 
 			model.addAttribute("error",e); 
 			return "redirect:/gestionAO/"+ap.getEmail()+"?secteurAO="+ao.getSecteurAO()+"&error="+e.getMessage(); 
@@ -93,10 +96,10 @@ public class APController {
 
 	@RequestMapping(value="/changeLieuExecution" ,method = RequestMethod.POST )
     public String changeLieuExecution(Model model, String lieuExecution, Long idAP, Long codeAO) {
-		AcheteurPublic ap = metier.getAP(idAP);
-		AppelOffres ao = metier.getAO(codeAO).get();
+		AcheteurPublic ap = userMetier.getAP(idAP);
+		AppelOffres ao = aoMetier.getAO(codeAO).get();
 		try { 
-			metier.changeLieuExecution(lieuExecution, codeAO);
+			aoMetier.changeLieuExecution(lieuExecution, codeAO);
 		}catch (Exception e){ 
 			model.addAttribute("error",e); 
 			return "redirect:/gestionAO/"+ap.getEmail()+"?secteurAO="+ao.getSecteurAO()+"&error="+e.getMessage(); 
@@ -107,10 +110,10 @@ public class APController {
 	
 	@RequestMapping(value="/changeDateExecution" ,method = RequestMethod.POST )
     public String changeDateExecution(Model model, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateExecution, Long idAP, Long codeAO) {
-		AcheteurPublic ap = metier.getAP(idAP);
-		AppelOffres ao = metier.getAO(codeAO).get();
+		AcheteurPublic ap = userMetier.getAP(idAP);
+		AppelOffres ao = aoMetier.getAO(codeAO).get();
 		try { 
-			metier.changeDateExecution(dateExecution, codeAO);
+			aoMetier.changeDateExecution(dateExecution, codeAO);
 		}catch (Exception e){ 
 			model.addAttribute("error",e); 
 			return "redirect:/gestionAO/"+ap.getEmail()+"?secteurAO="+ao.getSecteurAO()+"&error="+e.getMessage(); 
@@ -121,10 +124,10 @@ public class APController {
 	
 	@RequestMapping(value="/changeDossierConsultation" ,method = RequestMethod.POST )
     public String changeDossierConsultation(Model model, MultipartFile dossierConsultation, Long idAP, Long codeAO) {
-		AcheteurPublic ap = metier.getAP(idAP);
-		AppelOffres ao = metier.getAO(codeAO).get();
+		AcheteurPublic ap = userMetier.getAP(idAP);
+		AppelOffres ao = aoMetier.getAO(codeAO).get();
 		try { 
-			metier.changeDossierConsultation(dossierConsultation, codeAO);
+			aoMetier.changeDossierConsultation(dossierConsultation, codeAO);
 		}catch (Exception e){ 
 			model.addAttribute("error",e); 
 			return "redirect:/gestionAO/"+ap.getEmail()+"?secteurAO="+ao.getSecteurAO()+"&error="+e.getMessage(); 
@@ -136,25 +139,25 @@ public class APController {
 	@RequestMapping("/editAO/{codeAO}&{id}")
 	public ModelAndView editAO(@PathVariable(name = "codeAO") Long codeAO, @PathVariable(name = "id") Long id) {
 		ModelAndView mav = new ModelAndView("editAO");
-		AcheteurPublic ap = metier.getAP(id);
+		AcheteurPublic ap = userMetier.getAP(id);
 		mav.addObject("ap", ap);
-		AppelOffres ao = metier.getAO(codeAO).get();
+		AppelOffres ao = aoMetier.getAO(codeAO).get();
 		mav.addObject("ao", ao);
 		return mav;
 	}
 	
 	@RequestMapping("/deleteAO/{codeAO}&{id}")
 	public String deleteAO(@PathVariable(name = "codeAO") Long codeAO, @PathVariable(name = "id") Long id) {
-		AppelOffres ao = metier.getAO(codeAO).get();
+		AppelOffres ao = aoMetier.getAO(codeAO).get();
 		String secteur = ao.getSecteurAO();
-		metier.deleteAO(codeAO);
-		AcheteurPublic ap = metier.getAP(id);
+		aoMetier.deleteAO(codeAO);
+		AcheteurPublic ap = userMetier.getAP(id);
 		return "redirect:/gestionAO/"+ap.getEmail()+"?secteurAO="+secteur;
 	}
 	
 	@RequestMapping(value = "/profilAP/{email}")
 	public String profilAP(Model model, @PathVariable(name = "email") String email) {
-		AcheteurPublic ap = metier.getAPByEmail(email);
+		AcheteurPublic ap = userMetier.getAPByEmail(email);
 		model.addAttribute("ap", ap);
 		return "profilAP";
 	}
@@ -163,7 +166,7 @@ public class APController {
 	public ModelAndView editprofilAP(@PathVariable(name = "id") Long id) { 
 		ModelAndView mav = new ModelAndView("editProfilAP");
 	  
-		AcheteurPublic ap = metier.getAP(id); 
+		AcheteurPublic ap = userMetier.getAP(id); 
 		mav.addObject("ap", ap);
 	  
 		return mav; 
@@ -171,7 +174,7 @@ public class APController {
 	  
 	@RequestMapping(value="/saveProfilAP", method = RequestMethod.POST) 
 	public String saveProfilAP(@ModelAttribute("ap")AcheteurPublic ap) {
-		metier.saveAP(ap);
+		userMetier.saveAP(ap);
 		return "redirect:/profilAP/"+ap.getEmail(); 
 	}
 	 

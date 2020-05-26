@@ -25,13 +25,18 @@ import com.example.entities.Admin;
 import com.example.entities.AppelOffres;
 import com.example.entities.Document;
 import com.example.entities.Soumissionnaire;
-import com.example.metier.MarchesPublicsMetier;
+import com.example.metier.AppelOffresMetier;
+import com.example.metier.DocumentMetier;
+import com.example.metier.UtilisateurMetier;
 
 @Controller
 public class AdminController {
 	@Autowired
-	private MarchesPublicsMetier metier;
-	
+	private UtilisateurMetier userMetier;
+	@Autowired
+	private AppelOffresMetier aoMetier;
+	@Autowired
+	private DocumentMetier docMetier;
 	
 	@RequestMapping(value="/portailAdmin")
     public String pageAdmin(){
@@ -66,50 +71,50 @@ public class AdminController {
 	
 	@RequestMapping(value="/listAdmin")
 	public String listAdmin(Model model) {
-		List <Admin> admins = metier.getAdmins();
+		List <Admin> admins = userMetier.getAdmins();
 		model.addAttribute("admins", admins);
 		return "listAdmin";
 	}
 	
 	@RequestMapping(value="/listAP")
 	public String listAP(Model model) {
-		List <AcheteurPublic> aps = metier.getAPs();
+		List <AcheteurPublic> aps = userMetier.getAPs();
 		model.addAttribute("aps", aps);
 		return "listAP";
 	}
 	
 	@RequestMapping(value="/listSM")
 	public String listSM(Model model) {
-		List <Soumissionnaire> sms = metier.getSMs();
+		List <Soumissionnaire> sms = userMetier.getSMs();
 		model.addAttribute("sms", sms);
 		return "listSM";
 	}
 	
 	@RequestMapping(value="/saveAdmin", method = RequestMethod.POST)
 	public String saveAdmin(@ModelAttribute("user")Admin user) {
-		user.setPassword(metier.generatedPassword());
-		metier.saveAdmin(user);
+		user.setPassword(userMetier.generatedPassword());
+		userMetier.saveAdmin(user);
 		return "redirect:/listAdmin";
 	}
 	
 	@RequestMapping(value="/saveAP", method = RequestMethod.POST)
 	public String saveAP(@ModelAttribute("user")AcheteurPublic user) {
-		user.setPassword(metier.generatedPassword());
-		metier.saveAP(user);
+		user.setPassword(userMetier.generatedPassword());
+		userMetier.saveAP(user);
 		return "redirect:/listAP";
 	}
 	@RequestMapping(value="/saveSM", method = RequestMethod.POST)
 	public String saveSM(@ModelAttribute("user")Soumissionnaire user) {
-		user.setPassword(metier.generatedPassword());
-		metier.saveSM(user);
+		user.setPassword(userMetier.generatedPassword());
+		userMetier.saveSM(user);
 		return "redirect:/listSM";
 	}
 	
 	@RequestMapping(value="/changePassword" ,method = RequestMethod.POST )
     public String changePassword(Model model, Long id, String role) {
 		try {
-			String password = metier.generatedPassword();
-			metier.changePassword(password, id);
+			String password = userMetier.generatedPassword();
+			userMetier.changePassword(password, id);
 		}catch (Exception e){
 	          model.addAttribute("error",e);
 	          return "redirect:/list"+role+"&error="+e.getMessage();
@@ -120,7 +125,7 @@ public class AdminController {
 	@RequestMapping(value="/changeEmail" ,method = RequestMethod.POST )
     public String changeEmail(Model model, String email , Long id, String role) {
 		try {
-			metier.changeEmail(email, id);
+			userMetier.changeEmail(email, id);
 		}catch (Exception e){
 	          model.addAttribute("error",e);
 	          return "redirect:/list"+role+"&error="+e.getMessage();
@@ -132,7 +137,7 @@ public class AdminController {
 	@RequestMapping(value="/changeActive" ,method = RequestMethod.POST )
     public String changeActive(Model model, Boolean active, Long id, String role) {
 		try {
-			metier.changeActive(active, id);
+			userMetier.changeActive(active, id);
 		}catch (Exception e){
 	          model.addAttribute("error",e);
 	          return "redirect:/list"+role+"&error="+e.getMessage();
@@ -143,14 +148,14 @@ public class AdminController {
 	
 	@RequestMapping("/deleteUser/{id}")
 	public String deleteUser(@PathVariable(name = "id") Long id) {
-		metier.deleteUser(id);
+		userMetier.deleteUser(id);
 		return "redirect:/users";
 	}
 	
 	@RequestMapping("/editAdmin/{id}")
 	public ModelAndView showEditAdminForm(@PathVariable(name = "id") Long id) {
 		ModelAndView mav = new ModelAndView("editAdmin");
-		Admin user = metier.getAdmin(id);
+		Admin user = userMetier.getAdmin(id);
 		mav.addObject("user", user);
 		return mav;
 	}
@@ -158,7 +163,7 @@ public class AdminController {
 	@RequestMapping("/editAP/{id}")
 	public ModelAndView showEditAPForm(@PathVariable(name = "id") Long id) {
 		ModelAndView mav = new ModelAndView("editAP");
-		AcheteurPublic user = metier.getAP(id);
+		AcheteurPublic user = userMetier.getAP(id);
 		mav.addObject("user", user);
 		return mav;
 	}
@@ -166,20 +171,20 @@ public class AdminController {
 	@RequestMapping("/editSM/{id}")
 	public ModelAndView showEditSMForm(@PathVariable(name = "id") Long id) {
 		ModelAndView mav = new ModelAndView("editSM");
-		Soumissionnaire user = metier.getSM(id);
+		Soumissionnaire user = userMetier.getSM(id);
 		mav.addObject("user", user);
 		return mav;
 	}
 	
 	@RequestMapping(value = "/gestionAOAdmin/{email}", method = { RequestMethod.GET, RequestMethod.POST })
 	public String gestionAOAdmin(Model model,  @PathVariable(name = "email") String email,  @ModelAttribute("selectedSecteur") AppelOffres selectedSecteur) {
-		Admin admin = metier.getAdminByEmail(email);
+		Admin admin = userMetier.getAdminByEmail(email);
 		model.addAttribute("admin", admin);
 		
-		ArrayList<String> listSecteurs = metier.listSecteurs();
+		ArrayList<String> listSecteurs = aoMetier.listSecteurs();
 		model.addAttribute("listSecteurs", listSecteurs);
 		
-		List<AppelOffres> listAOSecteur = metier.listAOBySecteur(selectedSecteur.getSecteurAO());
+		List<AppelOffres> listAOSecteur = aoMetier.listAOBySecteur(selectedSecteur.getSecteurAO());
 		model.addAttribute("listAOSecteur", listAOSecteur);
 		
 		model.addAttribute("listAOSecteur", listAOSecteur);
@@ -188,16 +193,16 @@ public class AdminController {
 	
 	@RequestMapping("/deleteAOAdmin/{codeAO}&{id}")
 	public String deleteAOAdmin(@PathVariable(name = "codeAO") Long codeAO, @PathVariable(name = "id") Long id) {
-		AppelOffres ao = metier.getAO(codeAO).get();
+		AppelOffres ao = aoMetier.getAO(codeAO).get();
 		String secteur = ao.getSecteurAO();
-		metier.deleteAO(codeAO);
-		Admin admin = metier.getAdmin(id);
+		aoMetier.deleteAO(codeAO);
+		Admin admin = userMetier.getAdmin(id);
 		return "redirect:/gestionAOAdmin/"+admin.getEmail()+"?secteurAO="+secteur;
 	}
 	
 	@GetMapping("/docs")
 	public String getDocs(Model model) {
-		List <Document> docs = metier.getFiles();
+		List <Document> docs = docMetier.getFiles();
 		model.addAttribute("docs", docs);
 		return "documents";
 	}
@@ -205,14 +210,14 @@ public class AdminController {
 	@PostMapping("/uploadFiles")
 	public String uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
 		for(MultipartFile file:files) {
-			metier.saveFile(file);
+			docMetier.saveFile(file);
 		}
 		return "redirect:/docs";
 	}
 	
 	@GetMapping("/downloadFile/{fileId}")
 	public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable Long fileId) {
-		Document doc = metier.getFile(fileId).get();
+		Document doc = docMetier.getFile(fileId).get();
 		return ResponseEntity.ok()
 				.contentType(MediaType.parseMediaType(doc.getTypeDoc()))
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment:filename=\""+doc.getNomDoc()+"\"")
@@ -221,13 +226,13 @@ public class AdminController {
 	
 	@RequestMapping("/delete/{id}")
 	public String deleteDocument(@PathVariable(name = "id") Long id) {
-		metier.deleteDoc(id);
+		docMetier.deleteDoc(id);
 		return "redirect:/docs";
 	}
 	
 	@RequestMapping(value = "/profilAdmin/{email}")
 	public String profilAdmin(Model model, @PathVariable(name = "email") String email) {
-		Admin admin = metier.getAdminByEmail(email);
+		Admin admin = userMetier.getAdminByEmail(email);
 		model.addAttribute("admin", admin);
 		return "profilAdmin";
 	}
