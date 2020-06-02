@@ -82,4 +82,16 @@ public class AppelOffresMetier {
  	public void deleteAO(Long id) {
  		aoRepo.deleteById(id);
 	}
+ 	
+ 	public Long nbreAOs() {
+ 		return aoRepo.nbreAOs();
+ 	}
+ 	
+ 	public Integer nbreAOSecteur(String secteurAO) {
+ 		return aoRepo.nbreAOSecteur(secteurAO);
+ 	}
+ 	
+ 	public Long nbreAOsAP(AcheteurPublic acheteurPublic) {
+ 		return aoRepo.nbreAOsAP(acheteurPublic);
+ 	}
 }

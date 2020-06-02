@@ -7,8 +7,9 @@
 		<title>Gestion appels d'offres-Admin</title>
 		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<!-- Optional theme -->
+		<link rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
 	    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 		
@@ -36,7 +37,7 @@
 							  	<a href="#" class="list-group-item list-group-item-action ">A simple primary list group item</a>
 							</div>
 							<div class="list-group">
-							  	<a th:href="@{/gestionAO/{email}(email=${#httpServletRequest.remoteUser})}" class="list-group-item list-group-item-action ">Mes Appels Offres</a>
+							  	<a th:href="@{/gestionAO/{email}(email=${#httpServletRequest.remoteUser})}" class="list-group-item list-group-item-action ">Mes Appels d'Offres</a>
 							  	<a href="#" class="list-group-item list-group-item-action ">Soumissions</a>
 							  	<a th:href="@{/profilAP/}+${#httpServletRequest.remoteUser}" class="list-group-item list-group-item-action " th:value="${#httpServletRequest.remoteUser}">Mon profil</a>
 							</div>
@@ -51,5 +52,11 @@
 			<section layout:fragment="content" class="col-md-10">
 				
 			</section>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+			<!-- Latest compiled and minified JavaScript -->
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+			<script src="https://code.highcharts.com/highcharts.js"></script>
+			<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+			<script src="https://code.highcharts.com/modules/exporting.js"></script>
 	</body>
 </html>

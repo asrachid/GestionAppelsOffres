@@ -27,8 +27,6 @@ public class Document {
 		super();
 	}
 
-	
-
 	public Document(String nomDoc, String typeDoc, byte[] data) {
 		super();
 		this.nomDoc = nomDoc;

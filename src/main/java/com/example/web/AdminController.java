@@ -1,7 +1,10 @@
 package com.example.web;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -22,9 +25,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.entities.AcheteurPublic;
 import com.example.entities.Admin;
+import com.example.entities.Annonce;
 import com.example.entities.AppelOffres;
 import com.example.entities.Document;
 import com.example.entities.Soumissionnaire;
+import com.example.metier.AnnonceMetier;
 import com.example.metier.AppelOffresMetier;
 import com.example.metier.DocumentMetier;
 import com.example.metier.UtilisateurMetier;
@@ -37,9 +42,53 @@ public class AdminController {
 	private AppelOffresMetier aoMetier;
 	@Autowired
 	private DocumentMetier docMetier;
+	@Autowired
+	private AnnonceMetier annonceMetier;
 	
-	@RequestMapping(value="/portailAdmin")
-    public String pageAdmin(){
+	@RequestMapping(value="/portailAdmin", method = RequestMethod.GET)
+    public String pageAdmin(Model model){
+		Long nbreUsers = userMetier.nbreUsers();
+		Long nbreAOs = aoMetier.nbreAOs();
+		Long nbreDocs = docMetier.nbreDocs();
+		model.addAttribute("nbreUsers", nbreUsers);
+		model.addAttribute("nbreAOs", nbreAOs);
+		model.addAttribute("nbreDocs", nbreDocs);
+		
+		Integer nbreSM = userMetier.nbreSM();
+		Integer nbreAdmin = userMetier.nbreAdmin();
+		Integer nbreAP = userMetier.nbreAP();
+		Map<String,Integer> surveyMap = new HashMap<>();
+		if(nbreUsers!=0) {
+			Integer pctAdmin = (int) ((nbreAdmin*100)/nbreUsers);
+			Integer pctAP = (int) ((nbreAP*100)/nbreUsers);
+			Integer pctSM = (int) ((nbreSM*100)/nbreUsers);
+			
+			surveyMap.put("Admin", pctAdmin);
+			surveyMap.put("Acheteur public", pctAP);
+			surveyMap.put("Soumissionnaire", pctSM);
+			model.addAttribute("surveyMap",surveyMap);
+		}else {
+			surveyMap.put("Admin", 0);
+			surveyMap.put("Acheteur public", 0);
+			surveyMap.put("Soumissionnaire", 0);
+			model.addAttribute("surveyMap",surveyMap);
+		}
+		
+		Integer aoTravaux = aoMetier.nbreAOSecteur("Travaux");
+		Integer aoFournitures = aoMetier.nbreAOSecteur("Fournitures");
+		Integer aoServices = aoMetier.nbreAOSecteur("Services");
+		if(nbreAOs!=0) {
+			Integer pctTravaux = (int) ((aoTravaux*100)/nbreAOs);
+			Integer pctFournitures = (int) ((aoFournitures*100)/nbreAOs);
+			Integer pctServices = (int) ((aoServices*100)/nbreAOs);
+			model.addAttribute("travaux",pctTravaux);
+			model.addAttribute("fournitures",pctFournitures);
+			model.addAttribute("services",pctServices);
+		}else {
+			model.addAttribute("travaux",0);
+			model.addAttribute("fournitures",0);
+			model.addAttribute("services",0);
+		}
         return "portailAdmin";
     }
 	
@@ -185,6 +234,8 @@ public class AdminController {
 		model.addAttribute("listSecteurs", listSecteurs);
 		
 		List<AppelOffres> listAOSecteur = aoMetier.listAOBySecteur(selectedSecteur.getSecteurAO());
+		Date today = new Date();
+		model.addAttribute("today", today);
 		model.addAttribute("listAOSecteur", listAOSecteur);
 		
 		model.addAttribute("listAOSecteur", listAOSecteur);
@@ -198,6 +249,49 @@ public class AdminController {
 		aoMetier.deleteAO(codeAO);
 		Admin admin = userMetier.getAdmin(id);
 		return "redirect:/gestionAOAdmin/"+admin.getEmail()+"?secteurAO="+secteur;
+	}
+	
+	@RequestMapping("/annonces")
+	public String getAnnonces(Model model) {
+		List <Annonce> annonces = annonceMetier.getAnnonces();
+		model.addAttribute("annonces", annonces);
+		return "annonces";
+	}
+	
+	@RequestMapping(value = "/addAnnonce/{email}", method = { RequestMethod.GET, RequestMethod.POST })
+	public String addAnnonce(Model model, @PathVariable(name = "email") String email) {
+		Admin admin = userMetier.getAdminByEmail(email);
+		model.addAttribute("admin", admin);
+		Annonce annonce = new Annonce();
+		model.addAttribute("annonce", annonce);
+		return "addAnnonce";
+	}
+	
+	@RequestMapping(value = "/saveAnnonce",  method = RequestMethod.POST)
+	public String addNews(@ModelAttribute("annonce")Annonce annonce, String email) {
+		if(email!=null) {
+			Admin admin = userMetier.getAdminByEmail(email);
+			annonce.setAdmin(admin);
+		}
+		
+		annonce.setDate(new Date());
+		annonceMetier.saveAnnonce(annonce);
+		return "redirect:/annonces";
+	}
+	
+	@RequestMapping("/editAnnonce/{id}")
+	public ModelAndView showEditAnnonceForm(@PathVariable(name = "id") Long id) {
+		ModelAndView mav = new ModelAndView("editAnnonce");
+		Annonce  annonce = annonceMetier.findById(id);
+		mav.addObject("annonce", annonce);
+		
+		return mav;
+	}
+	
+	@RequestMapping("/deleteAnnonce/{id}")
+	public String deleteAnnonce(@PathVariable(name = "id") Long id) {
+		annonceMetier.deleteById(id);
+		return "redirect:/annonces";
 	}
 	
 	@GetMapping("/docs")

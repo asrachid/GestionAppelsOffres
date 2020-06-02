@@ -1,28 +1,166 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorator="templateAdmin">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head>
 	
 		<meta charset="utf-8">
 		<title>Gestion appels d'offres-Admin</title>
 
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	    <!-- Optional theme -->
+		<link rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+	    
 	</head>
 	<body>
-		<div layout:fragment="content">	
-			<div class="panel panel-light">
-				<div class="panel-body">	
-					<nav aria-label="breadcrumb">
-  						<ol class="breadcrumb">
-    						<li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-  						</ol>
-					</nav>
+		<header>
+			<div class="navbar navbar-default">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav">
+						<li><h1>Gestion des appels d'offres <span class="badge badge-secondary">PFA</span></h1></li>
+					</ul>
 				</div>
 			</div>
-		</div>
+		</header>
+		<aside class="col-md-2">
+				
+				<div class="panel panel-light">
+						<div class="panel-body">
+							<div class="list-group">
+								<a th:href="@{/portailAdmin}" class="list-group-item list-group-item-action">Dashboard</a>
+							  	<a th:href="@{/users}" class="list-group-item list-group-item-action">Gestion Utilisateurs</a>
+							  	<a th:href="@{/gestionAOAdmin/{email}(email=${#httpServletRequest.remoteUser})}" class="list-group-item list-group-item-action ">Appels d'Offres</a>
+							  	<a th:href="@{/annonces}" class="list-group-item list-group-item-action ">Gestion Annonces</a>
+							  	<a th:href="@{/docs}" class="list-group-item list-group-item-action ">Gestion Documents</a>
+							</div>
+							<div class="list-group">
+							  	<a th:href="@{/profilAdmin/}+${#httpServletRequest.remoteUser}" class="list-group-item list-group-item-action " th:value="${#httpServletRequest.remoteUser}">Mon profil</a>
+							</div>
+							<form th:action="@{/logout}" method="post">
+								<input type="submit" value="Se deconnecter" class="btn btn-danger">
+							</form>
+						</div>
+						
+				</div>
+			</aside>
+			<div layout:fragment="content" class="col-md-10">	
+				<div class="panel panel-light">
+					<div class="panel-body">	
+						<nav aria-label="breadcrumb">
+	  						<ol class="breadcrumb">
+	    						<li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+	  						</ol>
+						</nav>
+						 
+				  		<div class="card col-md-3" style="border-left:2px solid blue;border-radius:5px;background-color:#edeef1;padding:20px;margin-right:50px;">
+							<div class="card-body">
+								<div class="text-xs font-weight-bold text-primary text-uppercase">Nombre d'utilisateurs</div>
+				                <div class="font-weight-bold text-gray-800">[[${nbreUsers}]]</div>
+							</div>
+						</div>
+						
+						<div class="card col-md-3" style="border-left:2px solid #f6c23e;border-radius:5px;background-color:#edeef1;padding:20px;margin-right:50px;">
+							<div class="card-body">
+								<div class="text-xs font-weight-bold text-primary text-uppercase">Nombre d'appels d'offres</div>
+				                <div class="font-weight-bold text-gray-800">[[${nbreAOs}]]</div>
+							</div>
+						</div>
+						
+						<div class="card col-md-3" style="border-left:2px solid green;border-radius:5px;background-color:#edeef1;padding:20px;">
+							<div class="card-body">
+								<div class="text-xs font-weight-bold text-primary text-uppercase">Documents presents</div>
+				                <div class="font-weight-bold text-gray-800">[[${nbreDocs}]]</div>
+							</div>
+						</div>
+							
+						<div id="containerBarGraph" class="col-md-6" style="height:400px;margin-top:10px;"></div>
+						<div id="containerPieChart" class="col-md-6" style="height: 400px;margin-top:10px;"></div>
+					</div>
+				</div>
+			</div>  
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://code.highcharts.com/highcharts.js"></script>
+		<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+		<script src="https://code.highcharts.com/modules/exporting.js"></script>
+		<script th:inline="javascript">
+		    $(function(){
+		    Highcharts.chart('containerBarGraph', {
+		        chart: {
+		            type: 'column'
+		        },
+		        title: {
+		            text: 'Distribution des Utilisateurs'
+		        },
+		        subtitle: {
+		            text: 'Selon leur role'
+		        },
+		        xAxis: {
+		            categories: [[${surveyMap.keySet()}]],
+		            crosshair: true
+		        },
+		        yAxis: {
+		            min: 0,
+		            max:100,
+		            title: {
+		                text: 'Evaluation des utilisateurs [en %]'
+		            }
+		        },
+		        tooltip: {
+		            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+		            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+		            '<td style="padding:0"><b>{point.y:.1f} K</b></td></tr>',
+		            footerFormat: '</table>',
+		            shared: true,
+		            useHTML: true
+		        },
+		        plotOptions: {
+		            column: {
+		                pointPadding: 0.2,
+		                borderWidth: 0
+		            }
+		        },
+		        series: [{
+		            name: 'Utilisateur',
+		            data: [[${surveyMap.values()}]]
+		        }]
+		    });
+		    });
+
+		    Highcharts.chart('containerPieChart', {
+				chart : {
+					type : 'pie',
+					options3d : {
+						enabled : true,
+						alpha : 50,
+						beta : 0
+					}
+				},
+				title : {
+					text : "Appels d'offres par secteur"
+				},
+				tooltip : {
+					pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>'
+				},
+				plotOptions : {
+					pie : {
+						allowPointSelect : true,
+						cursor : 'pointer',
+						depth : 35,
+						dataLabels : {
+							enabled : true,
+							format : '{point.name}'
+						}
+					}
+				},
+				series : [ {
+					type : 'pie',
+					name : 'Ratio',
+					data : [ [ 'Travaux', [[${travaux}]] ], [ 'Fournitures', [[${fournitures}]] ], [ 'Services', [[${services}]] ]  ]
+				} ]
+			});
+	</script>   
 	</body>
 </html>

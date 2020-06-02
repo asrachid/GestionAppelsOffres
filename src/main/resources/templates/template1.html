@@ -8,8 +8,9 @@
 		<title>Gestion appels d'offres</title>
 		
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<!-- Optional theme -->
+		<link rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
 	    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	    
@@ -27,31 +28,30 @@
 		<aside class="col-md-2">
 			<div class="panel panel-light">
 					<div class="panel-body">
-						<div class="list-group">
-						  	<a href="#" class="list-group-item list-group-item-action active">Annonces</a>
-						  	<a href="#" class="list-group-item list-group-item-action ">A simple primary list group item</a>
-						  	<a href="#" class="list-group-item list-group-item-action ">A simple primary list group item</a>
-						  	<a href="#" class="list-group-item list-group-item-action ">A simple primary list group item</a>
-						  	<a href="#" class="list-group-item list-group-item-action ">A simple primary list group item</a>
+						
+						<div class="panel panel-link">
+							<div class="panel-heading" style="background-color:#3073ad;color:white;">Annonces</div>
+							<div class="panel-body list-group-item" th:each="annonce:${latest}">
+								<a th:href="@{/viewAnnonce/}+${annonce.id}"  th:text="${annonce.title}">A simple primary list group item</a>
+							</div>
 						</div>
+						
 						<div class="list-group">
-						  	<a th:href="@{/docs}" class="list-group-item list-group-item-action list-group-item-link">Documents officiels</a>
+						  	<a th:href="@{/docsOff}" class="list-group-item list-group-item-action list-group-item-link">Documents officiels</a>
 						</div>
 						<form th:action="@{/portailAP}" method="post">
-							<input type="submit" value="Accès Acheteur Public" class="btn btn-info">
+							<input type="submit" value="Accès Acheteur Public" class="btn btn-warning">
 						</form>
 						<br>
 						<form action="#" method="post">
-							<input type="submit" value="Accès Soumissionnaire" class="btn btn-info ">
+							<input type="submit" value="Accès Soumissionnaire" class="btn btn-warning">
 						</form>
 					</div>
 			</div>
 		</aside>
 		<section layout:fragment="content" class="col-md-10"></section>
-		<!-- Optional JavaScript -->
-	   	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" ></script>
-	    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-	    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+			<!-- Latest compiled and minified JavaScript -->
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</body>
 </html>

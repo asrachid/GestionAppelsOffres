@@ -60,7 +60,14 @@
 						
 						<a th:href="@{/portailAP/{email}(email=${#httpServletRequest.remoteUser})}" class="btn btn-warning btn-block">Evaluer mes appels d'offres</a>
 						
+						<div class="card" style="border-left:2px solid blue;border-radius:5px;background-color:#edeef1;padding:20px;margin-right:50px;margin-top:10px;">
+							<div class="card-body">
+								<div class="text-xs font-weight-bold text-primary text-uppercase">Nombre d'appels d'offres</div>
+				                <div class="font-weight-bold text-gray-800" th:text="${nbreAOsAP}">[[${nbreAOsAP}]]</div>
+							</div>
+						</div>
 						
+						<div id="containerBarGraph" style="height:350px;margin-top:10px;"></div> 
 					</div>
 				</div>
 			</div>
@@ -70,5 +77,50 @@
 			<script src="https://code.highcharts.com/highcharts.js"></script>
 			<script src="https://code.highcharts.com/highcharts-3d.js"></script>
 			<script src="https://code.highcharts.com/modules/exporting.js"></script>
+			<script th:inline="javascript">
+			 $(function(){
+				    Highcharts.chart('containerBarGraph', {
+				        chart: {
+				            type: 'column'
+				        },
+				        title: {
+				            text: "Distribution des appels d'offres"
+				        },
+				        subtitle: {
+				            text: 'Selon leur secteur'
+				        },
+				        xAxis: {
+				            categories: [[${surveyMap.keySet()}]],
+				            crosshair: true
+				        },
+				        yAxis: {
+				            min: 0,
+				            max:100,
+				            title: {
+				                text: 'Evaluation des secteurs [en %]'
+				            }
+				        },
+				        tooltip: {
+				            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+				            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+				            '<td style="padding:0"><b>{point.y:.1f} K</b></td></tr>',
+				            footerFormat: '</table>',
+				            shared: true,
+				            useHTML: true
+				        },
+				        plotOptions: {
+				            column: {
+				                pointPadding: 0.2,
+				                borderWidth: 0
+				            }
+				        },
+				        series: [{
+				            name: 'Secteur',
+				            data: [[${surveyMap.values()}]]
+				        }]
+				    });
+				    });
+					   
+			</script>
 	</body>
 </html>

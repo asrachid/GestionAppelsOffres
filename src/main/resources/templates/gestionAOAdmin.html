@@ -55,12 +55,13 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="ao:${listAOSecteur}">
+							<tr th:each="ao:${listAOSecteur}" th:style="${ao.dateLimiteRemisePlis.before(today)} ? 'background-color: #ffe46c;'"
+								th:styleappend="${ao.dateExecution.before(today)} ? 'background-color: #ffafab;'">
 							    <td th:text="${ao.objetAO}">Objet</td>
 								<td th:text="${ao.categorieAO}">Categorie</td>
 								<td><a th:href="@{'/downloadDoc/'+${ao.codeAO}}">[[${ao.dossierConsultationAO}]]</a></td>
-								<td th:text="${ao.dateLimiteRemisePlis}">Date limite remise plis</td>
-								<td th:text="${ao.dateExecution}">Date d'execution</td>
+								<td th:style="${ao.dateLimiteRemisePlis.before(today)} ? 'color:red'" th:text="${ao.dateLimiteRemisePlis}">Date limite remise plis</td>
+								<td th:style="${ao.dateExecution.before(today)} ? 'color:red'" th:text="${ao.dateExecution}">Date d'execution</td>
 								<td th:text="${ao.lieuExecution}">Lieu d'execution</td>
 								<td th:text="${ao.dateAO}">Date de sortie</td>
 								<td>

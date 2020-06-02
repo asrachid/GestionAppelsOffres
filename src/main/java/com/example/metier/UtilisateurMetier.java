@@ -116,6 +116,22 @@ public class UtilisateurMetier {
 		return smRepo.findById(id).get();
 	}
 	
+	public Long nbreUsers() {
+		return userRepo.nbreUsers();
+	}
+	
+	public Integer nbreSM() {
+		return smRepo.nbreSM();
+	}
+	
+	public Integer nbreAdmin() {
+		return adminRepo.nbreAdmin();
+	}
+	
+	public Integer nbreAP() {
+		return apRepo.nbreAP();
+	}
+	
 	public String generatedPassword() {
  		String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 	    String pass = "";

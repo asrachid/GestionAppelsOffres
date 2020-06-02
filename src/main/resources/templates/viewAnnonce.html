@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="template1">
+	<head>
+
+		<meta charset="utf-8">
+		<title>Gestion appels d'offres</title>
+		
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div layout:fragment="content">		
+			
+			<div class="panel panel-light">
+				<div class="panel-body">
+					<nav aria-label="breadcrumb">
+  						<ol class="breadcrumb">
+    						<li class="breadcrumb-item active" aria-current="page"><a th:href="@{/appelOffres}">Accueil</a></li>
+    						<li class="breadcrumb-item active" aria-current="page">Annonce num : [[${annonce.id}]]</li>
+  						</ol>
+					</nav>
+					
+					<article>
+						<h2 th:text="${annonce.title}">Post Title</h2>
+					    <div >
+						    <i>Publié le</i>
+						    <span th:text="${#dates.format(annonce.date, 'dd-MMM-yyyy')}">22-May-2016</span>
+					    </div>
+					    <p  th:utext="${annonce.content}">Post content</p>
+					</article>
+					<div class="panel panel-primary">
+						<div class="panel-heading"></div>
+						<div class="panel-body">
+							<table class="table table-hover" >
+								<thead>
+									<tr>
+										<th scope="col">Listes des annonces</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="annonce:${annonces}">
+										<td th:text="${annonce.title}">Titre annonce</td>
+										<td><a th:href="@{/viewAnnonce/}+${annonce.id}">Voir l'annonce</a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

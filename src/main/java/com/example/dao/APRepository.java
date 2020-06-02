@@ -19,4 +19,7 @@ public interface APRepository extends JpaRepository<AcheteurPublic,Long>{
 	@Modifying
 	@Query("update AcheteurPublic ap set ap.type=:type where ap.id=:id")
  	public void changeTypeAP(@Param("type") String type,@Param("id") long id);
+	
+	@Query("select count(*) from AcheteurPublic")
+ 	public Integer nbreAP();
 }

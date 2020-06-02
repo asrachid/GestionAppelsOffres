@@ -43,5 +43,12 @@ public interface AppelOffresRepository extends JpaRepository<AppelOffres,Long>{
 	@Query("update AppelOffres ao set ao.dossierConsultationAO=:dossierConsultationAO, ao.typeDocConsultation=:typeDocConsultation, ao.data=:data where ao.codeAO=:codeAO")
  	public void changeDossierConsultation(@Param("dossierConsultationAO") String dossierConsultationAO,@Param("typeDocConsultation") String typeDocConsultation,@Param("data") byte[] data,@Param("codeAO") long codeAO);
 	
+	@Query("select count(*) from AppelOffres")
+ 	public Long nbreAOs();
 	
+	@Query("select count(*) from AppelOffres ao where ao.secteurAO=:secteurAO")
+ 	public Integer nbreAOSecteur(@Param("secteurAO") String secteurAO);
+	
+	@Query("select count(*) from AppelOffres ao where ao.acheteurPublic=:acheteurPublic")
+ 	public Long nbreAOsAP(@Param("acheteurPublic") AcheteurPublic acheteurPublic);
 }

@@ -23,4 +23,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur,Long>{
 	@Modifying
 	@Query("update Utilisateur user set user.active=:active where user.id=:id")
  	public void changeActive(@Param("active") Boolean active,@Param("id") long id);
+	
+	@Query("select count(*) from Utilisateur")
+ 	public Long nbreUsers();
 }

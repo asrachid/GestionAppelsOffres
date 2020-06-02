@@ -12,4 +12,7 @@ public interface AdminRepository extends JpaRepository<Admin,Long>{
 	
 	@Query("select admin from Admin admin where admin.email=:email")
  	public Admin getAdminByEmail(@Param("email") String email);
+	
+	@Query("select count(*) from Admin")
+ 	public Integer nbreAdmin();
 }

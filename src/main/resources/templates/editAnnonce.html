@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="templateAdmin">
+	<head>
+	
+		<meta charset="utf-8">
+		<title>Gestion appels d'offres-Admin</title>
+
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div layout:fragment="content">		
+			
+			<div class="panel panel-light">
+				<div class="panel-body">
+					<nav aria-label="breadcrumb">
+  						<ol class="breadcrumb">
+    						<li class="breadcrumb-item active" aria-current="page"><a th:href="@{/annonces}">Gestion annonces</a></li>
+    						<li class="breadcrumb-item active" aria-current="page">Editer une Annonce</li>
+  						</ol>
+					</nav>
+					
+					<form th:action="@{/saveAnnonce}" th:object="${annonce}" id="myForm" name="myForm" method="post" class="form col-md-12">
+						
+						<div class="form-group">
+							<input type="hidden" th:field="*{id}"/>
+							<input type="hidden" th:field="*{admin}"/>
+							<label for="title">Titre</label>
+							<input type="text" class="form-control" th:field = "*{title}" name="title" required>
+						</div>
+						<div class="form-group">
+							<label for="content">Contenu</label>
+							<textarea class="form-control" rows = "5" cols = "" th:field = "*{content}" form = "myForm" required>... </textarea>
+						</div>
+						<button type="submit" class="btn btn-warning">submit</button>
+					</form>
+	
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

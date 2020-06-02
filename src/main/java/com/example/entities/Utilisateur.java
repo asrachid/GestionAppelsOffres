@@ -21,7 +21,6 @@ public class Utilisateur implements Serializable{
 	@Id @GeneratedValue
 	private Long id;
 	private String password;
-	private String username;
 	private String email;
 	private boolean active;
 	
@@ -29,10 +28,9 @@ public class Utilisateur implements Serializable{
 		super();
 	}
 
-	public Utilisateur(String password, String username, String email, boolean active) {
+	public Utilisateur(String password, String email, boolean active) {
 		super();
 		this.password = password;
-		this.username = username;
 		this.email = email;
 		this.active=active;
 	}
@@ -51,14 +49,6 @@ public class Utilisateur implements Serializable{
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getEmail() {

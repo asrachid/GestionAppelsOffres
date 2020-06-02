@@ -15,12 +15,15 @@ public class Admin extends Utilisateur{
 	@OneToMany(mappedBy="admin")
 	private Collection<Document> documents;
 	
+	@OneToMany(mappedBy="admin")
+	private Collection<Annonce> annonces;
+	
 	public Admin() {
 		super();
 	}
 	
-	public Admin(String password, String username, String email, boolean active) {
-		super(password, username, email, active);
+	public Admin(String password, String email, boolean active) {
+		super(password, email, active);
 	}
 
 	public Collection<Document> getDocuments() {
@@ -29,6 +32,14 @@ public class Admin extends Utilisateur{
 
 	public void setDocuments(Collection<Document> documents) {
 		this.documents = documents;
+	}
+
+	public Collection<Annonce> getAnnonces() {
+		return annonces;
+	}
+
+	public void setAnnonces(Collection<Annonce> annonces) {
+		this.annonces = annonces;
 	}
 	
 }

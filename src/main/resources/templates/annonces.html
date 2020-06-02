@@ -19,27 +19,29 @@
 				<div class="panel-body">
 					<nav aria-label="breadcrumb">
   						<ol class="breadcrumb">
-    						<li class="breadcrumb-item active" aria-current="page"><a th:href="@{/users}">Gestion utilisateurs</a></li>
-    						<li class="breadcrumb-item active">Liste des Administrateurs</li>
+    						<li class="breadcrumb-item active" aria-current="page">Gestion annonces</li>
   						</ol>
 					</nav>
-					<table class="table table-hover" >
+					
+					<a th:href="@{/addAnnonce/{email}(email=${#httpServletRequest.remoteUser})}" class="btn btn-warning btn-block">Ajouter une nouvelle annonce</a>
+					
+					<table class="table table-hover" style="margin-top:10px;">
 						<thead>
 							<tr>
-								<th scope="col">Email</th>
-								<th scope="col">Password</th>
-							    <th scope="col">Active</th>
-							    <th scope="col">Actions</th>
+								<th scope="col">Titre</th>
+								<th scope="col">Contenu</th>
+							    <th scope="col">Date</th>
+							    <th scope="col">Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="admin:${admins}">
-								<td th:text="${admin.email}">Email</td>
-							    <td th:text="${admin.password}">Password</td>
-							    <td th:text="${admin.active}">Active</td>
+							<tr th:each="annonce:${annonces}">
+								<td th:text="${annonce.title}">Titre</td>
+							    <td th:text="${annonce.content}">Contenu</td>
+							    <td th:text="${annonce.date}">Date</td>
 							    <td>
-							    	<a th:href="@{/editAdmin/}+${admin.id}">Edit</a>
-							    	<a th:href="@{'/deleteUser/'}+${admin.id}">Delete</a>
+							    	<a th:href="@{/editAnnonce/}+${annonce.id}">Edit</a>
+							    	<a th:href="@{'/deleteAnnonce/'}+${annonce.id}">Delete</a>
 							    </td>
 							</tr>
 						</tbody>

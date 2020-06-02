@@ -28,8 +28,8 @@ public class AcheteurPublic extends Utilisateur{
 		super();
 	}
 	
-	public AcheteurPublic(String password, String username, String email, boolean active,  String type, String profileAP) {
-		super(password, username, email, active);
+	public AcheteurPublic(String password, String email, boolean active,  String type, String profileAP) {
+		super(password, email, active);
 		this.type = type;
 		this.profileAP = profileAP;
 	}

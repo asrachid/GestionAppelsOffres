@@ -39,4 +39,8 @@ public class DocumentMetier {
  	public void deleteDoc(Long id) {
  		docRepo.deleteById(id);
 	}
+ 	
+ 	public Long nbreDocs() {
+ 		return docRepo.nbreDocs();
+ 	}
 }

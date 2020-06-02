@@ -1,6 +1,7 @@
 package com.example.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.entities.Soumissionnaire;
@@ -12,4 +13,6 @@ public interface SoumissionnaireRepository extends JpaRepository<Soumissionnaire
 	 * ) public Page<AppelOffres> listAppelOffresSecteur(@Param("x") Long codeUser
 	 * , @Param("y") Long codeAO , Pageable pageable );
 	 */
+	@Query("select count(*) from Soumissionnaire")
+ 	public Integer nbreSM();
 }

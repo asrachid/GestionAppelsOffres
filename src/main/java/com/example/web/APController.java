@@ -2,7 +2,9 @@ package com.example.web;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -32,9 +34,32 @@ public class APController {
 	@Autowired
 	private AppelOffresMetier aoMetier;
 
+
 	@RequestMapping(value = "/portailAP")
 	public String pageAP() {
 		return "portailAP";
+	}
+	
+	@RequestMapping(value = "/portailAP/{email}", method = { RequestMethod.GET, RequestMethod.POST })
+	public String evaluatePortailAP(Model model,  @PathVariable(name = "email") String email) {
+		AcheteurPublic ap = userMetier.getAPByEmail(email);
+		model.addAttribute("ap", ap);
+		Long nbreAOsAP = aoMetier.nbreAOsAP(ap);
+		model.addAttribute("nbreAOsAP", nbreAOsAP);
+		
+		Integer nbreTravaux = aoMetier.nbreAOSecteur("Travaux");
+		Integer nbreFournitures = aoMetier.nbreAOSecteur("Fournitures");
+		Integer nbreServices = aoMetier.nbreAOSecteur("Services");
+		Integer pctTravaux = (int) ((nbreTravaux*100)/nbreAOsAP);
+		Integer pctFournitures = (int) ((nbreFournitures*100)/nbreAOsAP);
+		Integer pctServices = (int) ((nbreServices*100)/nbreAOsAP);
+		
+		Map<String,Integer> surveyMap = new HashMap<>();
+		surveyMap.put("Travaux", pctTravaux);
+		surveyMap.put("Fournitures", pctFournitures);
+		surveyMap.put("Services", pctServices);
+		model.addAttribute("surveyMap",surveyMap);
+		return "evaluatePortailAP";
 	}
 	
 	@RequestMapping(value = "/gestionAO/{email}", method = { RequestMethod.GET, RequestMethod.POST })
@@ -47,8 +72,9 @@ public class APController {
 		model.addAttribute("listSecteurs", listSecteurs);
 		
 		List<AppelOffres> listAoAPSec = aoMetier.listAOByAPSec(ap, selectedSecteur.getSecteurAO());
-		
+		Date today = new Date();
 		model.addAttribute("listAoAPSec", listAoAPSec);
+		model.addAttribute("today", today);
 		return "gestionAO";
 	}
 	
