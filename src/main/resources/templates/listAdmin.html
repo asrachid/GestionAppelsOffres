@@ -23,6 +23,8 @@
     						<li class="breadcrumb-item active">Liste des Administrateurs</li>
   						</ol>
 					</nav>
+					<div th:if="${exception}" th:text="${exception}" class="alert alert-danger" ></div>
+					<div th:if="${info}" th:text="${info}" class="alert alert-success" ></div>
 					<table class="table table-hover" >
 						<thead>
 							<tr>
@@ -38,8 +40,9 @@
 							    <td th:text="${admin.password}">Password</td>
 							    <td th:text="${admin.active}">Active</td>
 							    <td>
-							    	<a th:href="@{/editAdmin/}+${admin.id}">Edit</a>
-							    	<a th:href="@{'/deleteUser/'}+${admin.id}">Delete</a>
+							    	<a th:href="@{/editAdmin/}+${admin.id}">Edit</a> |
+							    	<a th:href="@{'/deleteUser/'}+${admin.id}">Delete</a> |
+							    	<a th:href="@{/sendEmail(role=Admin,id=${admin.id})}">envoyer email</a>
 							    </td>
 							</tr>
 						</tbody>

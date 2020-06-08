@@ -7,8 +7,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
 
 @Entity
 @DiscriminatorValue("SM")
@@ -19,10 +19,9 @@ public class Soumissionnaire extends Utilisateur{
 	@Column (name="profile_sm")
 	private String profileS;
 	
-	@ManyToMany(fetch=FetchType.LAZY,
-			cascade=CascadeType.ALL,
-			mappedBy = "soumissionnaires")
-	private Set<AppelOffres> appelsOffres=new HashSet<>();
+	@OneToMany(mappedBy = "soumissionnaire", cascade=CascadeType.ALL)
+	private Set<Soumission> soumissions = new HashSet<>();
+	
 	
 	public Soumissionnaire() {
 		super();
@@ -41,13 +40,14 @@ public class Soumissionnaire extends Utilisateur{
 		this.profileS = profileS;
 	}
 
-	public Set<AppelOffres> getAppelsOffres() {
-		return appelsOffres;
+	public Set<Soumission> getSoumissions() {
+		return soumissions;
 	}
 
-	public void setAppelsOffres(Set<AppelOffres> appelsOffres) {
-		this.appelsOffres = appelsOffres;
+	public void setSoumissions(Set<Soumission> soumissions) {
+		this.soumissions = soumissions;
 	}
+
 	
 	
 	

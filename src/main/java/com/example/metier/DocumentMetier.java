@@ -32,6 +32,10 @@ public class DocumentMetier {
  		return docRepo.findById(fileId);
  	}
  	
+ 	public Document getDocInscription(String nomDoc) {
+ 		return docRepo.getDocInscription(nomDoc);
+ 	}
+ 	
  	public List<Document> getFiles(){
  		return docRepo.findAll();
  	}

@@ -23,12 +23,13 @@
     						<li class="breadcrumb-item active">Liste des Acheteurs publics</li>
   						</ol>
 					</nav>
+					<div th:if="${exception}" th:text="${exception}" class="alert alert-danger" ></div>
+					<div th:if="${info}" th:text="${info}" class="alert alert-success" ></div>
 					<table class="table table-hover" >
 						<thead>
 							<tr>
-								<th scope="col">Username</th>
+								<th scope="col">Email</th>
 								<th scope="col">Password</th>
-							    <th scope="col">Email</th>
 							    <th scope="col">Profile</th>
 							    <th scope="col">Type</th>
 							    <th scope="col">Active</th>
@@ -37,15 +38,15 @@
 						</thead>
 						<tbody>
 							<tr th:each="ap:${aps}">
-								<td th:text="${ap.username}">Username</td>
+								<td th:text="${ap.email}">Email</td>
 							    <td th:text="${ap.password}">Password</td>
-							    <td th:text="${ap.email}">Email</td>
 							    <td th:text="${ap.profileAP}">profile</td>
 							    <td th:text="${ap.type}">type</td>
 							    <td th:text="${ap.active}">Active</td>
 							    <td>
-							    	<a th:href="@{/editAP/}+${ap.id}">Edit</a>
-							    	<a th:href="@{'/deleteUser/'}+${ap.id}">Delete</a>
+							    	<a th:href="@{/editAP/}+${ap.id}">Edit</a> |
+							    	<a th:href="@{'/deleteUser/'}+${ap.id}">Delete</a> |
+							    	<a th:href="@{/sendEmail(role=AP,id=${ap.id})}">envoyer email</a>
 							    </td>
 							</tr>
 						</tbody>

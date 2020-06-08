@@ -119,23 +119,35 @@ public class AdminController {
     }
 	
 	@RequestMapping(value="/listAdmin")
-	public String listAdmin(Model model) {
+	public String listAdmin(Model model, @RequestParam(value="info", required=false) String info, @RequestParam(value="exception", required=false) String exception) {
 		List <Admin> admins = userMetier.getAdmins();
 		model.addAttribute("admins", admins);
+		
+		model.addAttribute("info", info);
+		model.addAttribute("exception", exception);
+		
 		return "listAdmin";
 	}
 	
 	@RequestMapping(value="/listAP")
-	public String listAP(Model model) {
+	public String listAP(Model model, @RequestParam(value="info", required=false) String info, @RequestParam(value="exception", required=false) String exception) {
 		List <AcheteurPublic> aps = userMetier.getAPs();
 		model.addAttribute("aps", aps);
+		
+		model.addAttribute("info", info);
+		model.addAttribute("exception", exception);
+		
 		return "listAP";
 	}
 	
 	@RequestMapping(value="/listSM")
-	public String listSM(Model model) {
+	public String listSM(Model model, @RequestParam(value="info", required=false) String info, @RequestParam(value="exception", required=false) String exception) {
 		List <Soumissionnaire> sms = userMetier.getSMs();
 		model.addAttribute("sms", sms);
+		
+		model.addAttribute("info", info);
+		model.addAttribute("exception", exception);
+		
 		return "listSM";
 	}
 	

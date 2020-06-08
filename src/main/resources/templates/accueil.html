@@ -69,7 +69,7 @@
 								<td th:text="${ao.lieuExecution}">Lieu d'execution</td>
 								<td th:text="${ao.dateAO}">Date de sortie</td>
 								<td>
-									
+									<a th:href="@{/soumissionner(codeAO=${ao.codeAO})}">Mettre une Soumission</a>
 								</td>
 							</tr>
 						</tbody>

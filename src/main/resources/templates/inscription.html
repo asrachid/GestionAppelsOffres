@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="template1">
+	<head>
+
+		<meta charset="utf-8">
+		<title>Gestion appels d'offres</title>
+		
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div layout:fragment="content">		
+			
+			<div class="panel panel-light">
+				<div class="panel-body">
+					<nav aria-label="breadcrumb">
+  						<ol class="breadcrumb">
+    						<li class="breadcrumb-item active" aria-current="page"><a th:href="@{/appelOffres}">Accueil</a></li>
+    						<li class="breadcrumb-item active" aria-current="page">Comment s'inscrire</li>
+  						</ol>
+					</nav>
+					<div class="panel panel-primary">
+						<div class="panel-heading"></div>
+						<div class="panel-body">
+							<div class="card" >
+							  <div class="card-body">
+							    <h5 class="card-title" >
+							    La plate-forme de dématérialisation des marchés publics est ouverte à l’ensemble des acheteurs publics et soumissionnaires.<br>
+								L’accès aux services offerts par la plate-forme nécessite une authentification par email et un code fourni .<br><br>
+								L’inscription aux services de la plate-forme se fait en suivant les étapes suivantes :<br><br>
+								1- Télécharger le formulaire d’inscription;<br>
+								2- Remplir soigneusement le formulaire d’inscription, en précisant une adresse email valide sur laquelle votre code d’accès sera envoyé;<br>
+								3- Faire signer et cacheter le formulaire d’inscription par la personne habilitée à cet effet ;<br>
+								4- Scanner le formulaire d’inscription et l’envoyer par email à l’adresse : xxxxxx@xxxx.xxx;</h5>
+							    <a th:href="@{/downloadFormInscription(libele=inscription)}">Formulaire d'inscription</a> 
+							  </div>
+							</div>
+						</div>
+					</div> 
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

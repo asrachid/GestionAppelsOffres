@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      >
+	<head>
+
+		<meta charset="utf-8">
+		<title>Gestion appels d'offres</title>
+		
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<header>
+			<div class="navbar navbar-default">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav">
+						<li><h1>Gestion des appels d'offres <span class="badge badge-secondary">PFA</span></h1></li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<aside class="col-md-2">
+			<div class="panel panel-light">
+					<div class="panel-body">
+						
+						<div class="panel panel-link">
+							<div class="panel-heading" style="background-color:#3073ad;color:white;">Annonces</div>
+							<div class="panel-body list-group-item" th:each="annonce:${latest}">
+								<a th:href="@{/viewAnnonce/}+${annonce.id}"  th:text="${annonce.title}">A simple primary list group item</a>
+							</div>
+						</div>
+						<form th:action="@{/logout}" method="post">
+								<input type="submit" value="Se deconnecter" class="btn btn-danger">
+							</form>
+					</div>
+			</div>
+		</aside>
+		<section layout:fragment="content" class="col-md-10">	
+					
+			
+			<div class="panel panel-light">
+				<div class="panel-body">
+					<nav aria-label="breadcrumb">
+  						<ol class="breadcrumb">
+    						<li class="breadcrumb-item active" aria-current="page"><a th:href="@{/appelOffres}">Accueil</a></li>
+    						<li class="breadcrumb-item active" aria-current="page">Soumissionner</li>
+  						</ol>
+					</nav>
+					<div th:if="${exception}" th:text="${exception}" class="alert alert-danger" ></div>
+					<div th:if="${info}" th:text="${info}" class="alert alert-success" ></div>
+					<div class="panel panel-primary">
+						<div class="panel-heading"></div>
+						<div class="panel-body">
+							<div class="card" >
+							  <div class="card-body" th:object="${ao}">
+							    <h5 class="card-title" >Objet : [[*{objetAO}]]</h5>
+							    <h5 class="card-title" >Secteur : [[*{secteurAO}]]</h5>
+							    <h6 class="card-subtitle mb-2 text-muted" >Date limite pour remise des plis :[[*{dateLimiteRemisePlis}]]</h6>
+							    <h6 class="card-subtitle mb-2 text-muted" >Lieu d'execution : [[*{lieuExecution}]]</h6>
+							    <h6 class="card-subtitle mb-2 text-muted" >Date d'execution : [[*{dateExecution}]]</h6>
+							  </div>
+							</div>
+						</div>
+					</div> 
+					
+					<form th:action="@{/saveSoumission}" th:object="${ao}" method="post" encType="multipart/form-data">
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="_candidature">Dossier de candidature</label>
+							    <input type="file" class="form-control" name="file" required>
+							</div>
+							<div class="form-group col-md-6">
+							    <input type="hidden" class="form-control" name="emailSM" th:value="${#httpServletRequest.remoteUser}" readonly="readonly" required>
+								<input type="hidden" class="form-control" name="codeAO" th:value="${ao.codeAO}" readonly="readonly" required>
+							</div>
+						</div>
+						<div class="form-group col-md-12">
+							<button type="submit" class="btn btn-warning">Envoyer</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+	</body>
+</html>

@@ -29,16 +29,14 @@
 				
 				<div class="panel panel-light">
 						<div class="panel-body">
-							<div class="list-group">
-							  	<a href="#" class="list-group-item list-group-item-action active">Annonces</a>
-							  	<a href="#" class="list-group-item list-group-item-action ">A simple primary list group item</a>
-							  	<a href="#" class="list-group-item list-group-item-action ">A simple primary list group item</a>
-							  	<a href="#" class="list-group-item list-group-item-action ">A simple primary list group item</a>
-							  	<a href="#" class="list-group-item list-group-item-action ">A simple primary list group item</a>
+							<div class="panel panel-link">
+								<div class="panel-heading" style="background-color:#3073ad;color:white;">Annonces</div>
+								<div class="panel-body list-group-item" th:each="annonce:${latest}">
+									<a th:href="@{/viewAnnonce/}+${annonce.id}"  th:text="${annonce.title}">A simple primary list group item</a>
+								</div>
 							</div>
 							<div class="list-group">
 							  	<a th:href="@{/gestionAO/{email}(email=${#httpServletRequest.remoteUser})}" class="list-group-item list-group-item-action ">Mes Appels d'Offres</a>
-							  	<a href="#" class="list-group-item list-group-item-action ">Soumissions</a>
 							  	<a th:href="@{/profilAP/}+${#httpServletRequest.remoteUser}" class="list-group-item list-group-item-action " th:value="${#httpServletRequest.remoteUser}">Mon profil</a>
 							</div>
 							<form th:action="@{/logout}" method="post">

@@ -28,20 +28,6 @@ public class UtilisateurMetier {
 	@Autowired
 	private SoumissionnaireRepository smRepo;
 	
-	/*
-	public void Soumissionner(Long codeAO, Long codeUser) {
-		if(findByIdAO(codeAO).isPresent() && findByIdUser(codeUser).isPresent()){
-	  		Optional<Utilisateur> sm = findByIdUser(codeUser); 	
-	 		Optional<AppelOffres> ao = findByIdAO(codeAO); 
-	 		AppelOffres ao=appelOffresRepository.getOne(codeAO);
-	 		Soumissionnaire sm=(Soumissionnaire) soumissionnaireRepository.getOne(codeUser); 
-	 		ao.getSoumissionnaires().add(sm);
-	 		sm.getAppelsOffres().add(ao); 
-	 		appelOffresRepository.save(ao);
-		}
-	}
-	*/
-	
 	public void changePassword(String password,long id) {
 		userRepo.changePassword(password, id);
 	}
@@ -87,6 +73,10 @@ public class UtilisateurMetier {
 	public AcheteurPublic getAPByEmail(String email) {
 		return apRepo.getAPByEmail(email);
 	}
+	
+	public Soumissionnaire getSMByEmail(String email) {
+ 		return smRepo.getSMByEmail(email);
+ 	}
 	
 	public List<AcheteurPublic> getAPs() { 
 	 	return apRepo.findAll(); 

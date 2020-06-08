@@ -23,8 +23,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.entities.AcheteurPublic;
+import com.example.entities.Annonce;
 import com.example.entities.AppelOffres;
+import com.example.entities.Soumission;
+import com.example.metier.AnnonceMetier;
 import com.example.metier.AppelOffresMetier;
+import com.example.metier.SoumissionMetier;
 import com.example.metier.UtilisateurMetier;
 
 @Controller
@@ -33,10 +37,15 @@ public class APController {
 	private UtilisateurMetier userMetier;
 	@Autowired
 	private AppelOffresMetier aoMetier;
-
-
+	@Autowired
+	private AnnonceMetier annonceMetier;
+	@Autowired
+	private SoumissionMetier soumissionMetier;
+	
 	@RequestMapping(value = "/portailAP")
-	public String pageAP() {
+	public String pageAP(Model model) {
+		List<Annonce> latest = annonceMetier.findLatest5();
+		model.addAttribute("latest", latest);
 		return "portailAP";
 	}
 	
@@ -50,15 +59,26 @@ public class APController {
 		Integer nbreTravaux = aoMetier.nbreAOSecteur("Travaux");
 		Integer nbreFournitures = aoMetier.nbreAOSecteur("Fournitures");
 		Integer nbreServices = aoMetier.nbreAOSecteur("Services");
-		Integer pctTravaux = (int) ((nbreTravaux*100)/nbreAOsAP);
-		Integer pctFournitures = (int) ((nbreFournitures*100)/nbreAOsAP);
-		Integer pctServices = (int) ((nbreServices*100)/nbreAOsAP);
-		
 		Map<String,Integer> surveyMap = new HashMap<>();
-		surveyMap.put("Travaux", pctTravaux);
-		surveyMap.put("Fournitures", pctFournitures);
-		surveyMap.put("Services", pctServices);
-		model.addAttribute("surveyMap",surveyMap);
+		if(nbreAOsAP!=0) {
+			Integer pctTravaux = (int) ((nbreTravaux*100)/nbreAOsAP);
+			Integer pctFournitures = (int) ((nbreFournitures*100)/nbreAOsAP);
+			Integer pctServices = (int) ((nbreServices*100)/nbreAOsAP);
+			
+			surveyMap.put("Travaux", pctTravaux);
+			surveyMap.put("Fournitures", pctFournitures);
+			surveyMap.put("Services", pctServices);
+			model.addAttribute("surveyMap",surveyMap);
+		}else {
+			surveyMap.put("Travaux", 0);
+			surveyMap.put("Fournitures", 0);
+			surveyMap.put("Services", 0);
+			model.addAttribute("surveyMap",surveyMap);
+		}
+		
+		List<Annonce> latest = annonceMetier.findLatest5();
+		model.addAttribute("latest", latest);
+		
 		return "evaluatePortailAP";
 	}
 	
@@ -75,6 +95,10 @@ public class APController {
 		Date today = new Date();
 		model.addAttribute("listAoAPSec", listAoAPSec);
 		model.addAttribute("today", today);
+		
+		List<Annonce> latest = annonceMetier.findLatest5();
+		model.addAttribute("latest", latest);
+		
 		return "gestionAO";
 	}
 	
@@ -91,6 +115,10 @@ public class APController {
 	public String addAO(Model model,  @PathVariable(name = "id") Long id, @ModelAttribute("ao")AppelOffres ao) {
 		AcheteurPublic ap = userMetier.getAP(id);
 		model.addAttribute("ap",ap);
+		
+		List<Annonce> latest = annonceMetier.findLatest5();
+		model.addAttribute("latest", latest);
+		
 		return "addAO";
 	}
 
@@ -181,20 +209,47 @@ public class APController {
 		return "redirect:/gestionAO/"+ap.getEmail()+"?secteurAO="+secteur;
 	}
 	
+	@RequestMapping(value="/viewSoumissions")
+	public String viewSoumissions(Model model, @ModelAttribute("codeAO") Long codeAO) {
+		AppelOffres ao = aoMetier.getAO(codeAO).get();
+		model.addAttribute("ao", ao);
+		List<Soumission> soumissions = soumissionMetier.listSoumissionsByAO(ao);
+		model.addAttribute("soumissions", soumissions);
+		
+		List<Annonce> latest = annonceMetier.findLatest5();
+		model.addAttribute("latest", latest);
+		return "viewSoumissions";
+	}
+	
+	
+	@GetMapping("/downloadDocCandidature/{smsId}")
+	public ResponseEntity<ByteArrayResource> downloadDocCandidature(@PathVariable Long smsId) {
+		Soumission doc = soumissionMetier.getSoumission(smsId).get();
+		return ResponseEntity.ok()
+				.contentType(MediaType.parseMediaType(doc.getTypeDoc())) 
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment:filename=\""+doc.getDossierCandidature()+"\"")
+				.body(new ByteArrayResource(doc.getData()));
+	}
+	
 	@RequestMapping(value = "/profilAP/{email}")
 	public String profilAP(Model model, @PathVariable(name = "email") String email) {
 		AcheteurPublic ap = userMetier.getAPByEmail(email);
 		model.addAttribute("ap", ap);
+		List<Annonce> latest = annonceMetier.findLatest5();
+		model.addAttribute("latest", latest);
 		return "profilAP";
 	}
 	
 	@RequestMapping(value="/editProfilAP/{id}") 
-	public ModelAndView editprofilAP(@PathVariable(name = "id") Long id) { 
+	public ModelAndView editprofilAP(Model model, @PathVariable(name = "id") Long id) { 
 		ModelAndView mav = new ModelAndView("editProfilAP");
 	  
 		AcheteurPublic ap = userMetier.getAP(id); 
 		mav.addObject("ap", ap);
 	  
+		List<Annonce> latest = annonceMetier.findLatest5();
+		model.addAttribute("latest", latest);
+		
 		return mav; 
 	}
 	  

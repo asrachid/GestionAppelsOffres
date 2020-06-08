@@ -5,6 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,6 +75,27 @@ public class AppController {
 		model.addAttribute("latest", latest);
 		return "viewAnnonce";
 	}
+	
+	@RequestMapping(value="/inscription")
+	public String signUpPage(Model model) {
+		
+		
+		List<Annonce> latest = annonceMetier.findLatest5();
+		model.addAttribute("latest", latest);
+		return "inscription";
+	}
+	
+	
+	@RequestMapping(value = "/downloadFormInscription")
+	public ResponseEntity<ByteArrayResource> downloadFormInscription(Model model, @ModelAttribute("libele") String libele) {
+		
+		Document doc = docMetier.getDocInscription(libele+".doc");
+		return ResponseEntity.ok()
+				.contentType(MediaType.parseMediaType(doc.getTypeDoc()))
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment:filename=\""+doc.getNomDoc()+"\"")
+				.body(new ByteArrayResource(doc.getData()));
+	}
+	
 	
 	@GetMapping(value="/login")
     public String loginPage(){		

@@ -43,7 +43,7 @@
 							</div>
 						</form>
 					</div>
-					<table class="table table-hover" style="margin-top:30px;" th:if="${selectedSecteur.secteurAO}">
+					<table class="table table-hover" th:if="${selectedSecteur.secteurAO}">
 						<thead>
 							<tr>
 								<th scope="col">Objet</th>
@@ -68,8 +68,9 @@
 								<td th:text="${ao.lieuExecution}">Lieu d'execution</td>
 								<td th:text="${ao.dateAO}">Date de sortie</td>
 								<td>
-									<a th:href="@{/editAO/{codeAO}&{id}(codeAO=${ao.codeAO},id=${ap.id})}">Edit</a>
-							    	<a th:href="@{/deleteAO/{codeAO}&{id}(codeAO=${ao.codeAO},id=${ap.id})}">Delete</a>
+									<a th:href="@{/editAO/{codeAO}&{id}(codeAO=${ao.codeAO},id=${ap.id})}">Edit</a> |
+							    	<a th:href="@{/deleteAO/{codeAO}&{id}(codeAO=${ao.codeAO},id=${ap.id})}">Delete</a> |
+							    	<a th:href="@{/viewSoumissions(codeAO=${ao.codeAO})}">Soumissions</a>
 								</td>
 							</tr>
 						</tbody>

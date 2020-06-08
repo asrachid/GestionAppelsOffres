@@ -23,12 +23,13 @@
     						<li class="breadcrumb-item active">Liste des Soumissionnaires</li>
   						</ol>
 					</nav>
+					<div th:if="${exception}" th:text="${exception}" class="alert alert-danger" ></div>
+					<div th:if="${info}" th:text="${info}" class="alert alert-success" ></div>
 					<table class="table table-hover" >
 						<thead>
 							<tr>
-								<th scope="col">Username</th>
+								<th scope="col">Email</th>
 								<th scope="col">Password</th>
-							    <th scope="col">Email</th>
 							    <th scope="col">Profile</th>
 							    <th scope="col">Active</th>
 							    <th scope="col">Actions</th>
@@ -36,14 +37,14 @@
 						</thead>
 						<tbody>
 							<tr th:each="sm:${sms}">
-								<td th:text="${sm.username}">Username</td>
+								<td th:text="${sm.email}">Email</td>
 							    <td th:text="${sm.password}">Password</td>
-							    <td th:text="${sm.email}">Email</td>
 							    <td th:text="${sm.profileS}">Profile</td>
 							    <td th:text="${sm.active}">Active</td>
 							    <td>
-							    	<a th:href="@{/editSM/}+${sm.id}">Edit</a>
-							    	<a th:href="@{'/deleteUser/'}+${sm.id}">Delete</a>
+							    	<a th:href="@{/editSM/}+${sm.id}">Edit</a> |
+							    	<a th:href="@{'/deleteUser/'}+${sm.id}">Delete</a> |
+							    	<a th:href="@{/sendEmail(role=SM,id=${sm.id})}">envoyer email</a>
 							    </td>
 							</tr>
 						</tbody>

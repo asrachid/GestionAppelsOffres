@@ -8,15 +8,13 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 
 
@@ -57,12 +55,15 @@ public class AppelOffres implements Serializable{
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="code_ap")
 	private AcheteurPublic acheteurPublic;
-	
+	/*
 	@ManyToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	@JoinTable(name="soumissionner",
 			joinColumns= {@JoinColumn(name="code_AO")},
 			inverseJoinColumns= {@JoinColumn(name="code_sm")})
     private Set<Soumissionnaire> soumissionnaires=new HashSet<>();
+	*/
+	@OneToMany(mappedBy = "appelOffres")
+	private Set<Soumission> soumissions = new HashSet<>();
 	
 	@Lob
 	private byte[] data;
@@ -169,14 +170,6 @@ public class AppelOffres implements Serializable{
 		this.acheteurPublic = acheteurPublic;
 	}
 
-	public Set<Soumissionnaire> getSoumissionnaires() {
-		return soumissionnaires;
-	}
-
-	public void setSoumissionnaires(Set<Soumissionnaire> soumissionnaires) {
-		this.soumissionnaires = soumissionnaires;
-	}
-
 	public byte[] getData() {
 		return data;
 	}
@@ -191,6 +184,14 @@ public class AppelOffres implements Serializable{
 
 	public void setTypeDocConsultation(String typeDocConsultation) {
 		this.typeDocConsultation = typeDocConsultation;
+	}
+
+	public Set<Soumission> getSoumissions() {
+		return soumissions;
+	}
+
+	public void setSoumissions(Set<Soumission> soumissions) {
+		this.soumissions = soumissions;
 	}
 	
 	
