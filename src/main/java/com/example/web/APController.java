@@ -197,6 +197,8 @@ public class APController {
 		mav.addObject("ap", ap);
 		AppelOffres ao = aoMetier.getAO(codeAO).get();
 		mav.addObject("ao", ao);
+		List<Annonce> latest = annonceMetier.findLatest5();
+		mav.addObject("latest", latest);
 		return mav;
 	}
 	

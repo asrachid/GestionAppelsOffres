@@ -29,7 +29,7 @@
 						<thead>
 							<tr>
 								<th scope="col">Titre</th>
-								<th scope="col">Contenu</th>
+								<!-- <th scope="col">Contenu</th> -->
 							    <th scope="col">Date</th>
 							    <th scope="col">Action</th>
 							</tr>
@@ -37,7 +37,7 @@
 						<tbody>
 							<tr th:each="annonce:${annonces}">
 								<td th:text="${annonce.title}">Titre</td>
-							    <td th:text="${annonce.content}">Contenu</td>
+							   <!--  <td th:text="${annonce.content}">Contenu</td> -->
 							    <td th:text="${annonce.date}">Date</td>
 							    <td>
 							    	<a th:href="@{/editAnnonce/}+${annonce.id}">Edit</a>

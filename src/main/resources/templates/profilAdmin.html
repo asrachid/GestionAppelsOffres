@@ -18,7 +18,8 @@
 				<div class="panel-body">	
 					<nav aria-label="breadcrumb">
   						<ol class="breadcrumb">
-    						<li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+    						<li class="breadcrumb-item active" aria-current="page"><a th:href="@{/portailAdmin}">Dashboard</a></li>
+    						<li class="breadcrumb-item active" aria-current="page">Mon profil</li>
   						</ol>
 					</nav>
 					<div class="panel panel-primary">
@@ -26,6 +27,7 @@
 						<div class="panel-body">
 							<div class="card" >
 							  <div class="card-body" th:object="${admin}">
+							  	<h5 class="card-title" >Admin</h5>
 							    <h5 class="card-title" >Email : [[*{email}]]</h5>
 							    <h5 class="card-title" >Password : [[*{password}]]</h5>
 							    <h6 class="card-subtitle mb-2 text-muted" >Active : [[*{active}]]</h6> 

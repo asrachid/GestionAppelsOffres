@@ -237,32 +237,6 @@ public class AdminController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/gestionAOAdmin/{email}", method = { RequestMethod.GET, RequestMethod.POST })
-	public String gestionAOAdmin(Model model,  @PathVariable(name = "email") String email,  @ModelAttribute("selectedSecteur") AppelOffres selectedSecteur) {
-		Admin admin = userMetier.getAdminByEmail(email);
-		model.addAttribute("admin", admin);
-		
-		ArrayList<String> listSecteurs = aoMetier.listSecteurs();
-		model.addAttribute("listSecteurs", listSecteurs);
-		
-		List<AppelOffres> listAOSecteur = aoMetier.listAOBySecteur(selectedSecteur.getSecteurAO());
-		Date today = new Date();
-		model.addAttribute("today", today);
-		model.addAttribute("listAOSecteur", listAOSecteur);
-		
-		model.addAttribute("listAOSecteur", listAOSecteur);
-		return "gestionAOAdmin";
-	}
-	
-	@RequestMapping("/deleteAOAdmin/{codeAO}&{id}")
-	public String deleteAOAdmin(@PathVariable(name = "codeAO") Long codeAO, @PathVariable(name = "id") Long id) {
-		AppelOffres ao = aoMetier.getAO(codeAO).get();
-		String secteur = ao.getSecteurAO();
-		aoMetier.deleteAO(codeAO);
-		Admin admin = userMetier.getAdmin(id);
-		return "redirect:/gestionAOAdmin/"+admin.getEmail()+"?secteurAO="+secteur;
-	}
-	
 	@RequestMapping("/annonces")
 	public String getAnnonces(Model model) {
 		List <Annonce> annonces = annonceMetier.getAnnonces();

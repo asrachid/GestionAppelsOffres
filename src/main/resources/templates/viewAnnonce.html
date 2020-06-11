@@ -48,7 +48,6 @@
 						<div sec:authorize="hasRole('ROLE_AP')">
 							<div class="list-group">
 							  	<a th:href="@{/gestionAO/{email}(email=${#httpServletRequest.remoteUser})}" class="list-group-item list-group-item-action ">Mes Appels d'Offres</a>
-							  	<a href="#" class="list-group-item list-group-item-action ">Soumissions</a>
 							  	<a th:href="@{/profilAP/}+${#httpServletRequest.remoteUser}" class="list-group-item list-group-item-action " th:value="${#httpServletRequest.remoteUser}">Mon profil</a>
 							</div>
 							<form th:action="@{/logout}" method="post">
