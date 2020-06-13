@@ -34,6 +34,11 @@ public class AppController {
 	@Autowired
 	private AnnonceMetier annonceMetier;
 	
+	@RequestMapping(value="/")
+    public String home(){
+        return "redirect:/appelOffres";
+    }
+	
 	@RequestMapping(value = "/appelOffres")
 	public String index(Model model , @ModelAttribute("selectedSecteur") AppelOffres selectedSecteur) {
 		List<AppelOffres> listAOs = aoMetier.listAll();
