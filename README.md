@@ -28,4 +28,16 @@ l’interaction entre les utilisateurs de l’application et le bon déroulement
 ### *Captures d'écrans de l'application*  <a name="captures"></a>
 **Page d'accueil**
 
-![Page d'accueil](https://github.com/asrachid/GestionParking-JavaEE-Project/blob/master/Documents/Captures/accueil.png)
+![Page d'accueil](https://github.com/asrachid/gestion_appels_d_offres/blob/master/documents/captures_d_ecran/captures_d_ecran/interfaces_generales/accueil.PNG)
+
+**Page d'authentification
+
+![Page d'accueil](https://github.com/asrachid/gestion_appels_d_offres/blob/master/documents/captures_d_ecran/captures_d_ecran/interfaces_generales/auth.PNG)
+
+**Page d'inscription
+
+![Page d'accueil](https://github.com/asrachid/gestion_appels_d_offres/blob/master/documents/captures_d_ecran/captures_d_ecran/interfaces_generales/inscription.PNG)
+
+**Page de dashboard Admin
+
+![Page d'accueil](https://github.com/asrachid/gestion_appels_d_offres/blob/master/documents/captures_d_ecran/captures_d_ecran/admin/dashboardAdmin.PNG)
