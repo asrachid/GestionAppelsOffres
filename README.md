@@ -30,14 +30,14 @@ l’interaction entre les utilisateurs de l’application et le bon déroulement
 
 ![Page d'accueil](https://github.com/asrachid/gestion_appels_d_offres/blob/master/documents/captures_d_ecran/captures_d_ecran/interfaces_generales/accueil.PNG)
 
-**Page d'authentification
+**Page d'authentification**
 
 ![Page d'accueil](https://github.com/asrachid/gestion_appels_d_offres/blob/master/documents/captures_d_ecran/captures_d_ecran/interfaces_generales/auth.PNG)
 
-**Page d'inscription
+**Page d'inscription**
 
 ![Page d'accueil](https://github.com/asrachid/gestion_appels_d_offres/blob/master/documents/captures_d_ecran/captures_d_ecran/interfaces_generales/inscription.PNG)
 
-**Page de dashboard Admin
+**Page de dashboard Admin**
 
 ![Page d'accueil](https://github.com/asrachid/gestion_appels_d_offres/blob/master/documents/captures_d_ecran/captures_d_ecran/admin/dashboardAdmin.PNG)
