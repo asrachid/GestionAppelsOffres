@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?PowerDesigner signature="Workspace" version="15.1.0.2850"?>
+<!-- Veuillez ne pas modifier ce fichier -->
+
+<Workspace>
+	<Local Expanded="Yes">
+		<Model Expanded="Yes" ID="{1847A471-C4E2-4BA7-9913-EED8A01C1354}" Loaded="No" Name="diagramme_de_classes" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="diagramme_de_classes.moo"/>
+		<Model Expanded="Yes" ID="{1847A471-C4E2-4BA7-9913-EED8A01C1354}" Loaded="No" Name="diagramme_de_classes" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="diagramme_de_classes.moo"/>
+		<Model Expanded="Yes" ID="{AE5B5D71-41B3-490F-9AFB-55ED6FDFDA58}" Loaded="No" Name="diagramme_de_cas_d_utilisation_visiteur" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="diagramme_de_cas_d_utilisation_visiteur.moo"/>
+		<Model Expanded="Yes" ID="{FE894AD8-A84C-4620-9A2A-04C5F005A3F5}" Loaded="No" Name="diagramme_de_cas_d_utilisation_acheteur_public" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="diagramme_de_cas_d_utilisation_acheteur_public.moo"/>
+		<Model Expanded="Yes" ID="{FE894AD8-A84C-4620-9A2A-04C5F005A3F5}" Loaded="No" Name="diagramme_de_cas_d_utilisation_acheteur_public" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="../diagramme_de_cas_d_utilisation_acheteur_public.moo"/>
+		<Model Expanded="Yes" ID="{FE894AD8-A84C-4620-9A2A-04C5F005A3F5}" Loaded="No" Name="diagramme_de_cas_d_utilisation_acheteur_public" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="../diagramme_de_cas_d_utilisation_acheteur_public.moo"/>
+		<Model Expanded="Yes" ID="{0F094216-A3E4-4904-9FAC-D00E32DD5C93}" Loaded="No" Name="diagramme_de_cas_d_utilisation_admin" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="diagramme_de_cas_d_utilisation_admin.moo"/>
+		<Model Expanded="Yes" ID="{162BB874-B5EA-4327-B6F1-0FD0CAE4A08B}" Loaded="No" Name="diagramme_de_cas_d_utilisation_soumissionnaire" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="diagramme_de_cas_d_utilisation_soumissionnaire.moo"/>
+		<Model Expanded="Yes" ID="{1847A471-C4E2-4BA7-9913-EED8A01C1354}" Loaded="No" Name="diagramme_de_classes" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="diagramme_de_classes.moo"/>
+		<Model Expanded="Yes" ID="{1847A471-C4E2-4BA7-9913-EED8A01C1354}" Loaded="No" Name="diagramme_de_classes" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="diagramme_de_classes.moo"/>
+		<Model Expanded="Yes" ID="{1847A471-C4E2-4BA7-9913-EED8A01C1354}" Loaded="No" Name="diagramme_de_classes" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="diagramme_de_classes.moo"/>
+		<Model Expanded="Yes" ID="{0F094216-A3E4-4904-9FAC-D00E32DD5C93}" Loaded="No" Name="diagramme_de_cas_d_utilisation_admin" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="diagramme_de_cas_d_utilisation_admin.moo"/>
+		<Model Expanded="Yes" ID="{FE894AD8-A84C-4620-9A2A-04C5F005A3F5}" Loaded="No" Name="diagramme_de_cas_d_utilisation_acheteur_public" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="diagramme_de_cas_d_utilisation_acheteur_public.moo"/>
+		<Model Expanded="Yes" ID="{162BB874-B5EA-4327-B6F1-0FD0CAE4A08B}" Loaded="No" Name="diagramme_de_cas_d_utilisation_soumissionnaire" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="diagramme_de_cas_d_utilisation_soumissionnaire.moo"/>
+		<Model Expanded="Yes" ID="{FE894AD8-A84C-4620-9A2A-04C5F005A3F5}" Loaded="No" Name="diagramme_de_cas_d_utilisation_acheteur_public" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="diagramme_de_cas_d_utilisation_acheteur_public.moo"/>
+		<Model Expanded="Yes" ID="{FE894AD8-A84C-4620-9A2A-04C5F005A3F5}" Loaded="No" Name="diagramme_de_cas_d_utilisation_acheteur_public" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="diagramme_de_cas_d_utilisation_acheteur_public.moo"/>
+		<Model Expanded="Yes" ID="{162BB874-B5EA-4327-B6F1-0FD0CAE4A08B}" Loaded="No" Name="diagramme_de_cas_d_utilisation_soumissionnaire" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="diagramme_de_cas_d_utilisation_soumissionnaire.moo"/>
+		<Model Expanded="Yes" ID="{0F094216-A3E4-4904-9FAC-D00E32DD5C93}" Loaded="No" Name="diagramme_de_cas_d_utilisation_admin" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="diagramme_de_cas_d_utilisation_admin.moo"/>
+		<Model Expanded="Yes" ID="{1847A471-C4E2-4BA7-9913-EED8A01C1354}" Loaded="No" Name="diagramme_de_classes" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="diagramme_de_classes.moo"/>
+		<Model Expanded="Yes" ID="{0F094216-A3E4-4904-9FAC-D00E32DD5C93}" Name="diagramme_de_cas_d_utilisation_admin" Selected="Yes" Type="{18112060-1A4B-11D1-83D9-444553540000}" URL="diagramme_de_cas_d_utilisation_admin.moo"/>
+	</Local>
+	<BrowserModule Name="Référentiel"/>
+</Workspace>
