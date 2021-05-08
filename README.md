@@ -21,9 +21,9 @@ l’interaction entre les utilisateurs de l’application et le bon déroulement
 
 ## *Caractéristiques* <a name="caracteristiques"></a>  
 
-*Couche dao basée sur Spring data, JPA, hibernate et JDBC.
-*Couche web basée sur MVC coté serveur en utilisant Thymeleaf. 
-*Maven pour la gestion du projet.
+* Couche dao basée sur Spring data, JPA, hibernate et JDBC.
+* Couche web basée sur MVC coté serveur en utilisant Thymeleaf. 
+* Maven pour la gestion du projet.
 
 ### *Captures d'écrans de l'application*  <a name="captures"></a>
 **Page d'accueil**
