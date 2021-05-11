@@ -1,6 +1,6 @@
 # Projet de fin d'année - Gestion des appels d'offres des marchés publiques
-## **Application Java EE permettant la gestion et le suivi des marchés par appel d’offres en plus d’autres fonctionnalités assurant
-l’interaction entre les utilisateurs de l’application et le bon déroulement de l’exécution d’un marché.**
+## Application Java EE permettant la gestion et le suivi des marchés par appel d’offres en plus d’autres fonctionnalités assurant
+l’interaction entre les utilisateurs de l’application et le bon déroulement de l’exécution d’un marché.
 
 
 ## Table of Contents
